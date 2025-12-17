@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Numbers Recap - Qubits</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #0a0a0a;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔢 Complex Numbers Recap</h1>
+            <p class="subtitle">Mathematical Foundation for Quantum Mechanics</p>
+        </header>
+
+        <section class="section">
+            <h2>Why Complex Numbers in Quantum Computing?</h2>
+            <p>
+                Complex numbers are fundamental to quantum mechanics and quantum computing. Quantum states 
+                are described using complex probability amplitudes, and quantum operations are represented 
+                by complex matrices. Understanding complex numbers is essential for working with qubits.
+            </p>
+            
+            <div id="canvas-container"></div>
+            
+            <div class="key-point">
+                <h3>Key Insight</h3>
+                <p>
+                    Complex numbers extend the real number system by introducing the imaginary unit <strong>i</strong>, 
+                    where i² = -1. This extension is necessary to describe the full quantum state space and 
+                    quantum interference phenomena.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Complex Number Basics</h2>
+            <p>
+                A complex number z is written as:
+            </p>
+            <div class="formula">
+                z = a + bi
+            </div>
+            <p>where:</p>
+            <ul>
+                <li><strong>a</strong> is the real part: Re(z) = a</li>
+                <li><strong>b</strong> is the imaginary part: Im(z) = b</li>
+                <li><strong>i</strong> is the imaginary unit: i² = -1</li>
+            </ul>
+            
+            <div class="example">
+                <h3>Examples</h3>
+                <ul>
+                    <li>z₁ = 3 + 4i (real part: 3, imaginary part: 4)</li>
+                    <li>z₂ = -2 + 5i (real part: -2, imaginary part: 5)</li>
+                    <li>z₃ = 7 (purely real: imaginary part is 0)</li>
+                    <li>z₄ = 3i (purely imaginary: real part is 0)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Complex Plane Representation</h2>
+            <p>
+                Complex numbers can be visualized on the <strong>complex plane</strong> (also called Argand diagram):
+            </p>
+            <ul>
+                <li>Horizontal axis: Real part (Re)</li>
+                <li>Vertical axis: Imaginary part (Im)</li>
+                <li>Each complex number is a point (a, b) or vector from origin</li>
+            </ul>
+            
+            <div class="highlight">
+                <h3>Polar Form</h3>
+                <p>
+                    Complex numbers can also be expressed in polar form:
+                </p>
+                <div class="formula">
+                    z = r(cos θ + i sin θ) = re^(iθ)
+                </div>
+                <p>where:</p>
+                <ul>
+                    <li><strong>r</strong> = |z| = √(a² + b²) is the modulus (magnitude)</li>
+                    <li><strong>θ</strong> = arg(z) = arctan(b/a) is the argument (phase angle)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Complex Number Operations</h2>
+            
+            <div class="code-block">
+                <h3>1. Addition and Subtraction</h3>
+                <p>Add/subtract real and imaginary parts separately:</p>
+                <div class="formula">
+                    (a + bi) + (c + di) = (a + c) + (b + d)i
+                </div>
+                <p><strong>Example:</strong> (3 + 4i) + (1 + 2i) = 4 + 6i</p>
+            </div>
+
+            <div class="code-block">
+                <h3>2. Multiplication</h3>
+                <p>Use distributive property and i² = -1:</p>
+                <div class="formula">
+                    (a + bi)(c + di) = (ac - bd) + (ad + bc)i
+                </div>
+                <p><strong>Example:</strong> (3 + 4i)(1 + 2i) = (3 - 8) + (6 + 4)i = -5 + 10i</p>
+            </div>
+
+            <div class="code-block">
+                <h3>3. Complex Conjugate</h3>
+                <p>Flip the sign of the imaginary part:</p>
+                <div class="formula">
+                    z* = a - bi (conjugate of z = a + bi)
+                </div>
+                <p><strong>Property:</strong> z · z* = a² + b² = |z|²</p>
+            </div>
+
+            <div class="code-block">
+                <h3>4. Division</h3>
+                <p>Multiply numerator and denominator by conjugate of denominator:</p>
+                <div class="formula">
+                    (a + bi)/(c + di) = [(a + bi)(c - di)]/[(c + di)(c - di)]
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Euler's Formula</h2>
+            <p>
+                One of the most important formulas in mathematics, connecting complex exponentials 
+                with trigonometric functions:
+            </p>
+            <div class="formula">
+                e^(iθ) = cos θ + i sin θ
+            </div>
+            
+            <div class="highlight">
+                <h3>Special Cases</h3>
+                <ul>
+                    <li><strong>Euler's Identity:</strong> e^(iπ) + 1 = 0</li>
+                    <li><strong>θ = 0:</strong> e^(i·0) = 1</li>
+                    <li><strong>θ = π/2:</strong> e^(iπ/2) = i</li>
+                    <li><strong>θ = π:</strong> e^(iπ) = -1</li>
+                    <li><strong>θ = 3π/2:</strong> e^(i3π/2) = -i</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <h3>Quantum Computing Application</h3>
+                <p>
+                    Euler's formula is crucial in quantum computing for representing qubit states 
+                    and quantum gates. The phase factor e^(iφ) appears frequently in quantum 
+                    state descriptions and gate operations.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Complex Numbers in Quantum States</h2>
+            <p>
+                In quantum computing, qubit states are represented using complex amplitudes:
+            </p>
+            <div class="formula">
+                |ψ⟩ = α|0⟩ + β|1⟩
+            </div>
+            <p>where α and β are complex numbers satisfying:</p>
+            <ul>
+                <li>|α|² + |β|² = 1 (normalization condition)</li>
+                <li>|α|² = probability of measuring |0⟩</li>
+                <li>|β|² = probability of measuring |1⟩</li>
+            </ul>
+            
+            <div class="example">
+                <h3>Example Quantum States</h3>
+                <ul>
+                    <li><strong>|0⟩:</strong> α = 1, β = 0</li>
+                    <li><strong>|1⟩:</strong> α = 0, β = 1</li>
+                    <li><strong>|+⟩:</strong> α = 1/√2, β = 1/√2</li>
+                    <li><strong>|−⟩:</strong> α = 1/√2, β = -1/√2</li>
+                    <li><strong>|+i⟩:</strong> α = 1/√2, β = i/√2</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Important Properties</h2>
+            
+            <div class="highlight">
+                <h3>1. Modulus (Magnitude)</h3>
+                <p>The modulus of a complex number z = a + bi is:</p>
+                <div class="formula">
+                    |z| = √(a² + b²)
+                </div>
+                <p>This represents the distance from the origin in the complex plane.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>2. Argument (Phase)</h3>
+                <p>The argument of a complex number z = a + bi is:</p>
+                <div class="formula">
+                    arg(z) = arctan(b/a)
+                </div>
+                <p>This represents the angle from the positive real axis.</p>
+            </div>
+
+            <div class="highlight">
+                <h3>3. De Moivre's Theorem</h3>
+                <p>For any real number θ and integer n:</p>
+                <div class="formula">
+                    (cos θ + i sin θ)^n = cos(nθ) + i sin(nθ)
+                </div>
+                <p>Or equivalently: (e^(iθ))^n = e^(inθ)</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Complex Numbers in Quantum Gates</h2>
+            <p>
+                Quantum gates are represented by unitary matrices with complex entries. 
+                Some important quantum gates:
+            </p>
+            
+            <div class="code-block">
+                <h3>Hadamard Gate</h3>
+                <div class="formula">
+                    H = (1/√2) [[1, 1], [1, -1]]
+                </div>
+                <p>Creates equal superposition from basis states</p>
+            </div>
+
+            <div class="code-block">
+                <h3>Phase Gate</h3>
+                <div class="formula">
+                    S = [[1, 0], [0, i]]
+                </div>
+                <p>Adds a phase of π/2 to the |1⟩ state</p>
+            </div>
+
+            <div class="code-block">
+                <h3>T Gate</h3>
+                <div class="formula">
+                    T = [[1, 0], [0, e^(iπ/4)]]
+                </div>
+                <p>Adds a phase of π/4 to the |1⟩ state</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Why Complex Numbers Matter</h2>
+            <div class="key-point">
+                <h3>Essential for Quantum Mechanics</h3>
+                <ul>
+                    <li><strong>Superposition:</strong> Complex amplitudes allow quantum states to be in superposition</li>
+                    <li><strong>Interference:</strong> Complex phases enable constructive and destructive interference</li>
+                    <li><strong>Unitarity:</strong> Quantum evolution preserves probability through unitary (complex) matrices</li>
+                    <li><strong>Measurement:</strong> Probabilities are derived from squared magnitudes of complex amplitudes</li>
+                    <li><strong>Entanglement:</strong> Complex coefficients describe correlations between qubits</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../01-introduction/index.html" class="btn">← Previous: Introduction</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../03-vectors/index.html" class="btn btn-primary">Next: Vectors →</a>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+        
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 0, 5);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+        
+        // Create complex plane
+        const gridHelper = new THREE.GridHelper(10, 20, 0x444444, 0x222222);
+        gridHelper.rotation.x = Math.PI / 2;
+        scene.add(gridHelper);
+        
+        // Add axes for complex plane
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+        
+        // Create several complex numbers as vectors
+        const complexNumbers = [
+            { real: 3, imag: 4, color: 0xff6b6b, label: '3+4i' },
+            { real: -2, imag: 3, color: 0x4ecdc4, label: '-2+3i' },
+            { real: 2, imag: -2, color: 0xffd93d, label: '2-2i' },
+            { real: -3, imag: -1, color: 0xa8e6cf, label: '-3-i' },
+            { real: 1, imag: 1, color: 0xff9999, label: '1+i' }
+        ];
+        
+        const arrows = [];
+        complexNumbers.forEach(cn => {
+            const dir = new THREE.Vector3(cn.real, cn.imag, 0).normalize();
+            const length = Math.sqrt(cn.real * cn.real + cn.imag * cn.imag);
+            const origin = new THREE.Vector3(0, 0, 0);
+            const arrow = new THREE.ArrowHelper(dir, origin, length, cn.color, 0.3, 0.2);
+            scene.add(arrow);
+            arrows.push({ arrow, cn });
+            
+            // Add point at the tip
+            const pointGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+            const pointMaterial = new THREE.MeshPhongMaterial({ color: cn.color });
+            const point = new THREE.Mesh(pointGeometry, pointMaterial);
+            point.position.set(cn.real, cn.imag, 0);
+            scene.add(point);
+        });
+        
+        // Add unit circle
+        const circleGeometry = new THREE.CircleGeometry(1, 64);
+        const circleEdges = new THREE.EdgesGeometry(circleGeometry);
+        const circleLine = new THREE.LineSegments(circleEdges, 
+            new THREE.LineBasicMaterial({ color: 0x64ffda, transparent: true, opacity: 0.5 }));
+        scene.add(circleLine);
+        
+        // Add rotating complex number to show Euler's formula
+        const eulerDir = new THREE.Vector3(1, 0, 0).normalize();
+        const eulerOrigin = new THREE.Vector3(0, 0, 0);
+        const eulerArrow = new THREE.ArrowHelper(eulerDir, eulerOrigin, 1, 0x64ffda, 0.2, 0.15);
+        scene.add(eulerArrow);
+        
+        // Animation
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Rotate Euler's formula arrow (e^(iθ))
+            const theta = time;
+            const x = Math.cos(theta);
+            const y = Math.sin(theta);
+            const newDir = new THREE.Vector3(x, y, 0).normalize();
+            eulerArrow.setDirection(newDir);
+            
+            // Pulse the static complex numbers
+            arrows.forEach((item, index) => {
+                const pulse = 1 + 0.1 * Math.sin(time * 2 + index);
+                item.arrow.setLength(
+                    Math.sqrt(item.cn.real * item.cn.real + item.cn.imag * item.cn.imag) * pulse,
+                    0.3 * pulse,
+                    0.2 * pulse
+                );
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
