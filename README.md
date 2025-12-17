@@ -35,6 +35,9 @@ This project provides an in-depth exploration of qubits through:
 ### Review (13)
 13. **Summary** - Complete reference guide and key takeaways
 
+### Practice (14)
+14. **Practice Exercises** - 39 interactive exercises to test your understanding
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -85,6 +88,7 @@ python run_all.py
 6. Advance to **Multi-Qubits** and **Entanglement**
 7. Master **Bloch Sphere** visualization
 8. Review **Summary** for comprehensive reference
+9. Test your knowledge with **Practice Exercises** (39 interactive problems)
 
 ## 🎨 Features
 
@@ -148,9 +152,12 @@ QUBITS/
 ├── 12-bloch-sphere/
 │   ├── index.html
 │   └── bloch_sphere.py
-└── 13-summary/
-    ├── index.html
-    └── summary.py
+├── 13-summary/
+│   ├── index.html
+│   └── summary.py
+└── 14-exercises/
+    ├── index.html            # 39 interactive exercises
+    └── exercises.py          # Answer verification and demonstrations
 ```
 
 ## 🎓 Key Concepts
