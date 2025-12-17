@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entangled Qubits - Interactive 3D Visualization</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .control-panel {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group button {
+            background: #64ffda;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-group button:hover {
+            background: #52d4c2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        .state-display {
+            background: rgba(100, 255, 218, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #64ffda;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concept 11: Entangled Qubits</h1>
+        
+        <div class="section">
+            <h2>Interactive 3D Visualization</h2>
+            <p>Explore quantum entanglement - the mysterious correlation between qubits that Einstein called "spooky action at a distance".</p>
+            <div id="canvas-container"></div>
+            
+            <div class="control-panel">
+                <div class="control-group">
+                    <button onclick="showBellState('phi_plus')">|Φ⁺⟩ Bell State</button>
+                    <button onclick="showBellState('phi_minus')">|Φ⁻⟩ Bell State</button>
+                    <button onclick="showBellState('psi_plus')">|Ψ⁺⟩ Bell State</button>
+                    <button onclick="showBellState('psi_minus')">|Ψ⁻⟩ Bell State</button>
+                </div>
+                
+                <div class="state-display">
+                    <h3>Current State:</h3>
+                    <p id="state-info">|Φ⁺⟩ = (|00⟩ + |11⟩)/√2</p>
+                    <p id="entanglement-info">Maximally entangled!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>What is Quantum Entanglement?</h2>
+            <p><span class="highlight">Quantum entanglement</span> is a phenomenon where two or more qubits become correlated in such a way that the state of one qubit cannot be described independently of the others, even when separated by large distances.</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>Entangled qubits exhibit correlations that are stronger than any possible classical correlation. Measuring one qubit instantly affects the state of the other, regardless of distance.</p>
+            </div>
+            
+            <h3>Mathematical Definition</h3>
+            <p>A state |ψ⟩ is <strong>entangled</strong> if it cannot be written as a tensor product:</p>
+            <div class="formula">
+                |ψ⟩ ≠ |ψ₁⟩ ⊗ |ψ₂⟩
+            </div>
+            
+            <p>A state is <strong>separable</strong> if it can be factored:</p>
+            <div class="formula">
+                |ψ⟩ = |ψ₁⟩ ⊗ |ψ₂⟩
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Bell States</h2>
+            <p>The four <span class="highlight">Bell states</span> are maximally entangled two-qubit states that form an orthonormal basis:</p>
+            
+            <div class="formula">
+                |Φ⁺⟩ = (|00⟩ + |11⟩)/√2<br>
+                |Φ⁻⟩ = (|00⟩ - |11⟩)/√2<br>
+                |Ψ⁺⟩ = (|01⟩ + |10⟩)/√2<br>
+                |Ψ⁻⟩ = (|01⟩ - |10⟩)/√2
+            </div>
+            
+            <h3>Properties of Bell States</h3>
+            <ul>
+                <li><strong>Maximally entangled:</strong> Cannot be factored into single-qubit states</li>
+                <li><strong>Orthonormal:</strong> ⟨Φⁱ|Φʲ⟩ = δᵢⱼ</li>
+                <li><strong>Perfect correlations:</strong> Measuring one determines the other</li>
+                <li><strong>Basis:</strong> Any two-qubit state can be written as combination of Bell states</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Creating Entanglement</h2>
+            <p>Entanglement is created using two-qubit gates, most commonly the CNOT gate:</p>
+            
+            <div class="example">
+                <h3>Example: Bell State Preparation</h3>
+                <p>Starting from |00⟩:</p>
+                <ol>
+                    <li>Apply Hadamard to first qubit: H ⊗ I |00⟩ = |+0⟩ = (|00⟩ + |10⟩)/√2</li>
+                    <li>Apply CNOT: CNOT |+0⟩ = (|00⟩ + |11⟩)/√2 = |Φ⁺⟩</li>
+                </ol>
+                <p>Result: Maximally entangled Bell state!</p>
+            </div>
+            
+            <h3>Other Bell States</h3>
+            <ul>
+                <li><strong>|Φ⁻⟩:</strong> Apply Z to first qubit of |Φ⁺⟩</li>
+                <li><strong>|Ψ⁺⟩:</strong> Apply X to first qubit of |Φ⁺⟩</li>
+                <li><strong>|Ψ⁻⟩:</strong> Apply X and Z to first qubit of |Φ⁺⟩</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Measurement Correlations</h2>
+            <p>Entangled states exhibit perfect measurement correlations:</p>
+            
+            <h3>Bell State |Φ⁺⟩ = (|00⟩ + |11⟩)/√2</h3>
+            <ul>
+                <li><strong>Z-basis measurement:</strong> Always get matching results (both 0 or both 1)</li>
+                <li><strong>Probability:</strong> P(00) = 50%, P(11) = 50%, P(01) = 0%, P(10) = 0%</li>
+                <li><strong>Correlation:</strong> If first qubit is 0, second is definitely 0</li>
+                <li><strong>Correlation:</strong> If first qubit is 1, second is definitely 1</li>
+            </ul>
+            
+            <h3>Bell State |Ψ⁺⟩ = (|01⟩ + |10⟩)/√2</h3>
+            <ul>
+                <li><strong>Z-basis measurement:</strong> Always get opposite results</li>
+                <li><strong>Probability:</strong> P(01) = 50%, P(10) = 50%, P(00) = 0%, P(11) = 0%</li>
+                <li><strong>Correlation:</strong> If first qubit is 0, second is definitely 1</li>
+                <li><strong>Correlation:</strong> If first qubit is 1, second is definitely 0</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>EPR Paradox and Bell's Theorem</h2>
+            <p>In 1935, Einstein, Podolsky, and Rosen (EPR) argued that quantum mechanics was incomplete because entanglement seemed to require "spooky action at a distance".</p>
+            
+            <h3>EPR Argument</h3>
+            <ol>
+                <li>Measuring one qubit instantly determines the other's state</li>
+                <li>This seems to violate locality (no faster-than-light influence)</li>
+                <li>Therefore, there must be "hidden variables" predetermining outcomes</li>
+            </ol>
+            
+            <h3>Bell's Theorem (1964)</h3>
+            <p>John Bell proved that <strong>no local hidden variable theory</strong> can reproduce all predictions of quantum mechanics.</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>Bell's inequality: Classical correlations ≤ 2, Quantum correlations ≤ 2√2 ≈ 2.828. Experiments consistently violate Bell's inequality, confirming quantum mechanics and ruling out local realism.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Entanglement Measures</h2>
+            <p>How do we quantify entanglement?</p>
+            
+            <h3>Concurrence</h3>
+            <p>For two-qubit pure states: C ∈ [0, 1]</p>
+            <ul>
+                <li><strong>C = 0:</strong> Separable (no entanglement)</li>
+                <li><strong>C = 1:</strong> Maximally entangled (Bell states)</li>
+            </ul>
+            
+            <h3>Entanglement Entropy</h3>
+            <p>Von Neumann entropy of reduced density matrix:</p>
+            <div class="formula">
+                S(ρₐ) = -Tr(ρₐ log₂ ρₐ)
+            </div>
+            <ul>
+                <li><strong>S = 0:</strong> Separable</li>
+                <li><strong>S = 1:</strong> Maximally entangled (for 2 qubits)</li>
+            </ul>
+            
+            <h3>Schmidt Decomposition</h3>
+            <p>Any pure bipartite state can be written as:</p>
+            <div class="formula">
+                |ψ⟩ = Σᵢ √λᵢ |iₐ⟩|iᵦ⟩
+            </div>
+            <p>Number of non-zero λᵢ is the <strong>Schmidt rank</strong>:</p>
+            <ul>
+                <li><strong>Rank = 1:</strong> Separable</li>
+                <li><strong>Rank > 1:</strong> Entangled</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Multi-Qubit Entanglement</h2>
+            <p>Entanglement becomes more complex with more qubits:</p>
+            
+            <h3>GHZ State (3 qubits)</h3>
+            <div class="formula">
+                |GHZ⟩ = (|000⟩ + |111⟩)/√2
+            </div>
+            <p>All three qubits are entangled together. Measuring one affects all others.</p>
+            
+            <h3>W State (3 qubits)</h3>
+            <div class="formula">
+                |W⟩ = (|001⟩ + |010⟩ + |100⟩)/√3
+            </div>
+            <p>Different entanglement structure than GHZ. More robust to qubit loss.</p>
+            
+            <h3>Cluster States</h3>
+            <p>Used in measurement-based quantum computing. Each qubit entangled with neighbors in a lattice.</p>
+        </div>
+
+        <div class="section">
+            <h2>Applications of Entanglement</h2>
+            <p>Entanglement is a resource for quantum information processing:</p>
+            
+            <h3>Quantum Teleportation</h3>
+            <p>Transfer quantum state using entanglement and classical communication</p>
+            <ul>
+                <li>Requires shared Bell pair</li>
+                <li>No faster-than-light communication</li>
+                <li>Original state is destroyed (no cloning)</li>
+            </ul>
+            
+            <h3>Superdense Coding</h3>
+            <p>Send 2 classical bits using 1 qubit and shared entanglement</p>
+            <ul>
+                <li>Double classical capacity</li>
+                <li>Requires pre-shared Bell pair</li>
+            </ul>
+            
+            <h3>Quantum Key Distribution (QKD)</h3>
+            <p>Secure key exchange using entangled photons</p>
+            <ul>
+                <li>Provably secure (information-theoretic)</li>
+                <li>Eavesdropping detectable</li>
+                <li>E91 protocol uses Bell states</li>
+            </ul>
+            
+            <h3>Quantum Error Correction</h3>
+            <p>Protect quantum information using entangled states</p>
+            <ul>
+                <li>Encode logical qubit in multiple physical qubits</li>
+                <li>Detect and correct errors</li>
+                <li>Essential for fault-tolerant quantum computing</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Entanglement in Nature</h2>
+            <p>Entanglement is not just a laboratory curiosity:</p>
+            
+            <ul>
+                <li><strong>Photosynthesis:</strong> Entanglement may help energy transfer in plants</li>
+                <li><strong>Bird navigation:</strong> Quantum entanglement in cryptochrome proteins</li>
+                <li><strong>Quantum biology:</strong> Entanglement in enzyme reactions</li>
+                <li><strong>Black holes:</strong> Entanglement entropy and holography</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>Quantum entanglement is a fundamental feature of quantum mechanics:</p>
+            <ul>
+                <li>Entangled states cannot be factored into independent parts</li>
+                <li>Bell states are maximally entangled two-qubit states</li>
+                <li>Created using two-qubit gates (CNOT, CZ)</li>
+                <li>Exhibits perfect measurement correlations</li>
+                <li>Violates Bell's inequality (no local hidden variables)</li>
+                <li>Quantified by concurrence, entanglement entropy, Schmidt rank</li>
+                <li>Essential resource for quantum communication and computing</li>
+                <li>Applications: teleportation, QKD, error correction</li>
+            </ul>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="../10-multi-qubits/index.html" class="btn btn-secondary">← Previous: Multi-Qubits</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../12-bloch-sphere/index.html" class="btn btn-primary">Next: Bloch Sphere →</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let qubit1, qubit2, entanglementLink;
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(5, 3, 5);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0x64ffda, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            // Create entangled qubits
+            createEntangledQubits();
+            
+            // Show initial Bell state
+            showBellState('phi_plus');
+            
+            animate();
+            
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function createEntangledQubits() {
+            // Qubit 1
+            const geometry1 = new THREE.SphereGeometry(0.5, 32, 32);
+            const material1 = new THREE.MeshPhongMaterial({ 
+                color: 0xff6b6b,
+                emissive: 0xff6b6b,
+                emissiveIntensity: 0.3
+            });
+            qubit1 = new THREE.Mesh(geometry1, material1);
+            qubit1.position.set(-3, 0, 0);
+            scene.add(qubit1);
+            
+            // Qubit 2
+            const geometry2 = new THREE.SphereGeometry(0.5, 32, 32);
+            const material2 = new THREE.MeshPhongMaterial({ 
+                color: 0x4ecdc4,
+                emissive: 0x4ecdc4,
+                emissiveIntensity: 0.3
+            });
+            qubit2 = new THREE.Mesh(geometry2, material2);
+            qubit2.position.set(3, 0, 0);
+            scene.add(qubit2);
+            
+            // Entanglement link (curved line)
+            createEntanglementLink();
+        }
+        
+        function createEntanglementLink() {
+            if (entanglementLink) {
+                scene.remove(entanglementLink);
+            }
+            
+            // Create a curved path between qubits
+            const curve = new THREE.QuadraticBezierCurve3(
+                new THREE.Vector3(-3, 0, 0),
+                new THREE.Vector3(0, 3, 0),
+                new THREE.Vector3(3, 0, 0)
+            );
+            
+            const points = curve.getPoints(50);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({ 
+                color: 0xffff00,
+                linewidth: 3
+            });
+            
+            entanglementLink = new THREE.Line(geometry, material);
+            scene.add(entanglementLink);
+            
+            // Add particles along the link
+            for (let i = 0; i < 10; i++) {
+                const t = i / 9;
+                const point = curve.getPoint(t);
+                const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+                const particleMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+                const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+                particle.position.copy(point);
+                particle.userData.t = t;
+                particle.userData.curve = curve;
+                scene.add(particle);
+                entanglementLink.userData = entanglementLink.userData || {};
+                entanglementLink.userData.particles = entanglementLink.userData.particles || [];
+                entanglementLink.userData.particles.push(particle);
+            }
+        }
+        
+        function showBellState(state) {
+            let stateInfo = '';
+            let entanglementInfo = 'Maximally entangled!';
+            
+            switch(state) {
+                case 'phi_plus':
+                    stateInfo = '|Φ⁺⟩ = (|00⟩ + |11⟩)/√2';
+                    qubit1.material.color.setHex(0xff6b6b);
+                    qubit2.material.color.setHex(0xff6b6b);
+                    break;
+                case 'phi_minus':
+                    stateInfo = '|Φ⁻⟩ = (|00⟩ - |11⟩)/√2';
+                    qubit1.material.color.setHex(0xff6b6b);
+                    qubit2.material.color.setHex(0x4ecdc4);
+                    break;
+                case 'psi_plus':
+                    stateInfo = '|Ψ⁺⟩ = (|01⟩ + |10⟩)/√2';
+                    qubit1.material.color.setHex(0x4ecdc4);
+                    qubit2.material.color.setHex(0xff6b6b);
+                    break;
+                case 'psi_minus':
+                    stateInfo = '|Ψ⁻⟩ = (|01⟩ - |10⟩)/√2';
+                    qubit1.material.color.setHex(0x4ecdc4);
+                    qubit2.material.color.setHex(0x4ecdc4);
+                    break;
+            }
+            
+            document.getElementById('state-info').textContent = stateInfo;
+            document.getElementById('entanglement-info').textContent = entanglementInfo;
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate qubits
+            if (qubit1) {
+                qubit1.rotation.y += 0.01;
+                qubit1.rotation.x += 0.005;
+            }
+            if (qubit2) {
+                qubit2.rotation.y += 0.01;
+                qubit2.rotation.x += 0.005;
+            }
+            
+            // Animate particles along entanglement link
+            if (entanglementLink && entanglementLink.userData.particles) {
+                entanglementLink.userData.particles.forEach((particle, i) => {
+                    particle.userData.t = (particle.userData.t + 0.005) % 1;
+                    const point = particle.userData.curve.getPoint(particle.userData.t);
+                    particle.position.copy(point);
+                });
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

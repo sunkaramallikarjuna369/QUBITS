@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical View of Qubits - Interactive 3D Visualization</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .implementation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .implementation-card {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #64ffda;
+        }
+        
+        .implementation-card h3 {
+            color: #64ffda;
+            margin-top: 0;
+        }
+        
+        .control-panel {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group button {
+            background: #64ffda;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-group button:hover {
+            background: #52d4c2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concept 7: Physical View of Qubits</h1>
+        
+        <div class="section">
+            <h2>Interactive 3D Visualization</h2>
+            <p>Explore different physical implementations of qubits. The visualization shows various quantum systems that can serve as qubits.</p>
+            <div id="canvas-container"></div>
+            
+            <div class="control-panel">
+                <div class="control-group">
+                    <button onclick="showPhoton()">Photon Polarization</button>
+                    <button onclick="showSpin()">Electron Spin</button>
+                    <button onclick="showSuperconducting()">Superconducting Circuit</button>
+                    <button onclick="showIon()">Trapped Ion</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Physical Implementations of Qubits</h2>
+            <p>Qubits are not abstract mathematical objects - they are realized using real physical quantum systems. Any two-level quantum system can serve as a qubit.</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The power of quantum computing comes from exploiting the quantum mechanical properties of physical systems: superposition, entanglement, and interference. Different physical implementations have different advantages and challenges.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Major Physical Qubit Implementations</h2>
+            
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3>Photon Polarization</h3>
+                    <p><strong>Basis States:</strong></p>
+                    <ul>
+                        <li>|0⟩ = Horizontal polarization</li>
+                        <li>|1⟩ = Vertical polarization</li>
+                    </ul>
+                    <p><strong>Advantages:</strong></p>
+                    <ul>
+                        <li>Long coherence times</li>
+                        <li>Easy to transmit over distances</li>
+                        <li>Room temperature operation</li>
+                    </ul>
+                    <p><strong>Challenges:</strong></p>
+                    <ul>
+                        <li>Difficult to store</li>
+                        <li>Hard to create entanglement</li>
+                        <li>Probabilistic gates</li>
+                    </ul>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3>Electron Spin</h3>
+                    <p><strong>Basis States:</strong></p>
+                    <ul>
+                        <li>|0⟩ = Spin up (↑)</li>
+                        <li>|1⟩ = Spin down (↓)</li>
+                    </ul>
+                    <p><strong>Advantages:</strong></p>
+                    <ul>
+                        <li>Small physical size</li>
+                        <li>Fast gate operations</li>
+                        <li>Well-understood physics</li>
+                    </ul>
+                    <p><strong>Challenges:</strong></p>
+                    <ul>
+                        <li>Short coherence times</li>
+                        <li>Sensitive to magnetic noise</li>
+                        <li>Difficult to scale</li>
+                    </ul>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3>Superconducting Circuits</h3>
+                    <p><strong>Basis States:</strong></p>
+                    <ul>
+                        <li>|0⟩ = Ground state</li>
+                        <li>|1⟩ = First excited state</li>
+                    </ul>
+                    <p><strong>Advantages:</strong></p>
+                    <ul>
+                        <li>Fast gate operations (ns)</li>
+                        <li>Scalable architecture</li>
+                        <li>Controllable coupling</li>
+                    </ul>
+                    <p><strong>Challenges:</strong></p>
+                    <ul>
+                        <li>Requires extreme cooling (~20 mK)</li>
+                        <li>Short coherence times (μs)</li>
+                        <li>Complex fabrication</li>
+                    </ul>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3>Trapped Ions</h3>
+                    <p><strong>Basis States:</strong></p>
+                    <ul>
+                        <li>|0⟩ = Ground hyperfine state</li>
+                        <li>|1⟩ = Excited hyperfine state</li>
+                    </ul>
+                    <p><strong>Advantages:</strong></p>
+                    <ul>
+                        <li>Long coherence times (seconds)</li>
+                        <li>High-fidelity gates (>99.9%)</li>
+                        <li>All-to-all connectivity</li>
+                    </ul>
+                    <p><strong>Challenges:</strong></p>
+                    <ul>
+                        <li>Slow gate operations (μs)</li>
+                        <li>Complex laser systems</li>
+                        <li>Difficult to scale</li>
+                    </ul>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3>Quantum Dots</h3>
+                    <p><strong>Basis States:</strong></p>
+                    <ul>
+                        <li>|0⟩ = Electron in left dot</li>
+                        <li>|1⟩ = Electron in right dot</li>
+                    </ul>
+                    <p><strong>Advantages:</strong></p>
+                    <ul>
+                        <li>Semiconductor technology</li>
+                        <li>Small size</li>
+                        <li>Potential for integration</li>
+                    </ul>
+                    <p><strong>Challenges:</strong></p>
+                    <ul>
+                        <li>Short coherence times</li>
+                        <li>Complex control</li>
+                        <li>Fabrication variability</li>
+                    </ul>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3>Topological Qubits</h3>
+                    <p><strong>Basis States:</strong></p>
+                    <ul>
+                        <li>|0⟩ = Anyonic state 0</li>
+                        <li>|1⟩ = Anyonic state 1</li>
+                    </ul>
+                    <p><strong>Advantages:</strong></p>
+                    <ul>
+                        <li>Inherent error protection</li>
+                        <li>Long coherence times</li>
+                        <li>Robust to local noise</li>
+                    </ul>
+                    <p><strong>Challenges:</strong></p>
+                    <ul>
+                        <li>Experimental stage</li>
+                        <li>Complex fabrication</li>
+                        <li>Unproven at scale</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Physical Requirements</h2>
+            <p>For a physical system to serve as a qubit, it must satisfy several requirements:</p>
+            
+            <ol>
+                <li><strong>Two-Level System:</strong> Must have two distinguishable quantum states</li>
+                <li><strong>Superposition:</strong> Must support quantum superposition of basis states</li>
+                <li><strong>Coherence:</strong> Must maintain quantum state long enough for computation</li>
+                <li><strong>Initialization:</strong> Must be able to prepare in known initial state</li>
+                <li><strong>Manipulation:</strong> Must be able to apply quantum gates</li>
+                <li><strong>Measurement:</strong> Must be able to read out final state</li>
+                <li><strong>Isolation:</strong> Must be isolated from environment to prevent decoherence</li>
+                <li><strong>Scalability:</strong> Must be possible to create many qubits and connect them</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>Decoherence and Noise</h2>
+            <p>The biggest challenge in physical qubit implementations is <span class="highlight">decoherence</span> - the loss of quantum properties due to interaction with the environment.</p>
+            
+            <div class="example">
+                <h3>Sources of Decoherence</h3>
+                <ul>
+                    <li><strong>Thermal noise:</strong> Random thermal fluctuations</li>
+                    <li><strong>Electromagnetic interference:</strong> Stray fields and radiation</li>
+                    <li><strong>Material defects:</strong> Impurities and structural imperfections</li>
+                    <li><strong>Control errors:</strong> Imperfect gate operations</li>
+                    <li><strong>Measurement backaction:</strong> Disturbance from readout</li>
+                </ul>
+            </div>
+            
+            <h3>Coherence Times</h3>
+            <p>Different physical implementations have vastly different coherence times:</p>
+            <ul>
+                <li><strong>Superconducting qubits:</strong> T₂ ~ 10-100 μs</li>
+                <li><strong>Trapped ions:</strong> T₂ ~ seconds to minutes</li>
+                <li><strong>Quantum dots:</strong> T₂ ~ 1-10 μs</li>
+                <li><strong>NV centers in diamond:</strong> T₂ ~ milliseconds</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Control and Manipulation</h2>
+            <p>Physical qubits are controlled using various techniques depending on the implementation:</p>
+            
+            <h3>Control Methods</h3>
+            <ul>
+                <li><strong>Microwave pulses:</strong> For superconducting qubits and spin qubits</li>
+                <li><strong>Laser pulses:</strong> For trapped ions and NV centers</li>
+                <li><strong>Voltage pulses:</strong> For quantum dots</li>
+                <li><strong>Magnetic field gradients:</strong> For NMR qubits</li>
+            </ul>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The control mechanism must be precise enough to implement high-fidelity quantum gates while being fast enough to complete operations before decoherence destroys the quantum state.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Measurement Techniques</h2>
+            <p>Reading out the state of a physical qubit requires converting quantum information to classical information:</p>
+            
+            <h3>Measurement Approaches</h3>
+            <ul>
+                <li><strong>Dispersive readout:</strong> Superconducting qubits (microwave resonators)</li>
+                <li><strong>Fluorescence detection:</strong> Trapped ions and NV centers</li>
+                <li><strong>Charge sensing:</strong> Quantum dots</li>
+                <li><strong>Photon detection:</strong> Photonic qubits</li>
+            </ul>
+            
+            <p>Measurement fidelity is crucial - typical requirements are >99% accuracy for fault-tolerant quantum computing.</p>
+        </div>
+
+        <div class="section">
+            <h2>Current State of Technology</h2>
+            <p>As of 2024, different physical implementations are at different stages of development:</p>
+            
+            <div class="example">
+                <h3>Leading Platforms</h3>
+                <ul>
+                    <li><strong>Superconducting qubits:</strong> IBM, Google, Rigetti (50-1000+ qubits)</li>
+                    <li><strong>Trapped ions:</strong> IonQ, Honeywell (10-100 qubits)</li>
+                    <li><strong>Photonic qubits:</strong> Xanadu, PsiQuantum (experimental)</li>
+                    <li><strong>Neutral atoms:</strong> QuEra, Pasqal (100+ qubits)</li>
+                    <li><strong>Topological qubits:</strong> Microsoft (experimental)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>Physical qubits are realized using various quantum systems, each with unique advantages and challenges:</p>
+            <ul>
+                <li>Multiple physical implementations exist (superconducting, ions, photons, etc.)</li>
+                <li>All must satisfy requirements for superposition, coherence, and control</li>
+                <li>Decoherence is the primary challenge limiting qubit performance</li>
+                <li>Different platforms excel in different metrics (coherence time, gate speed, scalability)</li>
+                <li>The race is on to find the optimal physical platform for large-scale quantum computing</li>
+            </ul>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="../06-mathematical-view/index.html" class="btn btn-secondary">← Previous: Mathematical View</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../08-computational-view/index.html" class="btn btn-primary">Next: Computational View →</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let currentSystem = 'photon';
+        let animationObjects = [];
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(4, 4, 4);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0x64ffda, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            // Add axes
+            const axesHelper = new THREE.AxesHelper(3);
+            scene.add(axesHelper);
+            
+            // Show initial system
+            showPhoton();
+            
+            animate();
+            
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function clearScene() {
+            animationObjects.forEach(obj => {
+                scene.remove(obj);
+                if (obj.geometry) obj.geometry.dispose();
+                if (obj.material) obj.material.dispose();
+            });
+            animationObjects = [];
+        }
+        
+        function showPhoton() {
+            clearScene();
+            currentSystem = 'photon';
+            
+            // Create photon wave
+            const waveGeometry = new THREE.BufferGeometry();
+            const wavePoints = [];
+            for (let i = 0; i < 100; i++) {
+                const t = i / 100 * Math.PI * 4;
+                wavePoints.push(new THREE.Vector3(t - 2 * Math.PI, Math.sin(t), 0));
+            }
+            waveGeometry.setFromPoints(wavePoints);
+            const waveMaterial = new THREE.LineBasicMaterial({ color: 0x64ffda, linewidth: 2 });
+            const wave = new THREE.Line(waveGeometry, waveMaterial);
+            scene.add(wave);
+            animationObjects.push(wave);
+            
+            // Add polarization arrows
+            const arrowMaterial = new THREE.MeshBasicMaterial({ color: 0xff6b6b });
+            const arrowGeometry = new THREE.ConeGeometry(0.1, 0.5, 8);
+            const arrow1 = new THREE.Mesh(arrowGeometry, arrowMaterial);
+            arrow1.position.set(0, 1, 0);
+            arrow1.rotation.z = Math.PI;
+            scene.add(arrow1);
+            animationObjects.push(arrow1);
+            
+            const arrow2 = new THREE.Mesh(arrowGeometry, arrowMaterial.clone());
+            arrow2.material.color.set(0x4ecdc4);
+            arrow2.position.set(0, -1, 0);
+            scene.add(arrow2);
+            animationObjects.push(arrow2);
+        }
+        
+        function showSpin() {
+            clearScene();
+            currentSystem = 'spin';
+            
+            // Create electron sphere
+            const electronGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const electronMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x64ffda,
+                emissive: 0x64ffda,
+                emissiveIntensity: 0.3
+            });
+            const electron = new THREE.Mesh(electronGeometry, electronMaterial);
+            scene.add(electron);
+            animationObjects.push(electron);
+            
+            // Add spin arrows
+            const arrowHelper1 = new THREE.ArrowHelper(
+                new THREE.Vector3(0, 1, 0),
+                new THREE.Vector3(0, 0.5, 0),
+                1.5,
+                0xff6b6b,
+                0.3,
+                0.2
+            );
+            scene.add(arrowHelper1);
+            animationObjects.push(arrowHelper1);
+            
+            const arrowHelper2 = new THREE.ArrowHelper(
+                new THREE.Vector3(0, -1, 0),
+                new THREE.Vector3(0, -0.5, 0),
+                1.5,
+                0x4ecdc4,
+                0.3,
+                0.2
+            );
+            scene.add(arrowHelper2);
+            animationObjects.push(arrowHelper2);
+        }
+        
+        function showSuperconducting() {
+            clearScene();
+            currentSystem = 'superconducting';
+            
+            // Create circuit representation
+            const circuitGeometry = new THREE.TorusGeometry(1, 0.1, 16, 100);
+            const circuitMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x64ffda,
+                emissive: 0x64ffda,
+                emissiveIntensity: 0.2
+            });
+            const circuit = new THREE.Mesh(circuitGeometry, circuitMaterial);
+            scene.add(circuit);
+            animationObjects.push(circuit);
+            
+            // Add energy level indicators
+            const level0Geometry = new THREE.PlaneGeometry(2, 0.1);
+            const level0Material = new THREE.MeshBasicMaterial({ color: 0xff6b6b, side: THREE.DoubleSide });
+            const level0 = new THREE.Mesh(level0Geometry, level0Material);
+            level0.position.y = -1;
+            scene.add(level0);
+            animationObjects.push(level0);
+            
+            const level1Material = new THREE.MeshBasicMaterial({ color: 0x4ecdc4, side: THREE.DoubleSide });
+            const level1 = new THREE.Mesh(level0Geometry.clone(), level1Material);
+            level1.position.y = 1;
+            scene.add(level1);
+            animationObjects.push(level1);
+        }
+        
+        function showIon() {
+            clearScene();
+            currentSystem = 'ion';
+            
+            // Create ion sphere
+            const ionGeometry = new THREE.SphereGeometry(0.3, 32, 32);
+            const ionMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x64ffda,
+                emissive: 0x64ffda,
+                emissiveIntensity: 0.5
+            });
+            const ion = new THREE.Mesh(ionGeometry, ionMaterial);
+            scene.add(ion);
+            animationObjects.push(ion);
+            
+            // Create trap electrodes
+            const electrodeGeometry = new THREE.CylinderGeometry(0.1, 0.1, 2, 8);
+            const electrodeMaterial = new THREE.MeshPhongMaterial({ color: 0x888888 });
+            
+            for (let i = 0; i < 4; i++) {
+                const electrode = new THREE.Mesh(electrodeGeometry, electrodeMaterial);
+                const angle = (i / 4) * Math.PI * 2;
+                electrode.position.set(Math.cos(angle) * 2, 0, Math.sin(angle) * 2);
+                electrode.rotation.z = Math.PI / 2;
+                scene.add(electrode);
+                animationObjects.push(electrode);
+            }
+            
+            // Add laser beams
+            const laserGeometry = new THREE.CylinderGeometry(0.05, 0.05, 3, 8);
+            const laserMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.6 });
+            const laser = new THREE.Mesh(laserGeometry, laserMaterial);
+            laser.position.set(2, 0, 0);
+            laser.rotation.z = Math.PI / 2;
+            scene.add(laser);
+            animationObjects.push(laser);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate objects for visual effect
+            animationObjects.forEach((obj, index) => {
+                if (obj.rotation) {
+                    obj.rotation.y += 0.01;
+                }
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Qubit Operations - Interactive 3D Visualization</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .control-panel {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group label {
+            display: block;
+            color: #64ffda;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .control-group input[type="range"] {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .control-group button {
+            background: #64ffda;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-group button:hover {
+            background: #52d4c2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        .state-display {
+            background: rgba(100, 255, 218, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #64ffda;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concept 9: Single Qubit Operations</h1>
+        
+        <div class="section">
+            <h2>Interactive 3D Visualization</h2>
+            <p>Explore single qubit operations on the Bloch sphere. Adjust rotation angles to see how the qubit state evolves.</p>
+            <div id="canvas-container"></div>
+            
+            <div class="control-panel">
+                <div class="control-group">
+                    <label>Rotation Axis:</label>
+                    <button onclick="setAxis('X')">X-axis</button>
+                    <button onclick="setAxis('Y')">Y-axis</button>
+                    <button onclick="setAxis('Z')">Z-axis</button>
+                </div>
+                
+                <div class="control-group">
+                    <label>Rotation Angle: <span id="angle-value">0</span>°</label>
+                    <input type="range" id="angle-slider" min="0" max="360" value="0" step="1">
+                </div>
+                
+                <div class="control-group">
+                    <button onclick="resetState()">Reset to |0⟩</button>
+                    <button onclick="setState('plus')">Set to |+⟩</button>
+                    <button onclick="setState('minus')">Set to |−⟩</button>
+                </div>
+                
+                <div class="state-display">
+                    <h3>Current State:</h3>
+                    <p id="state-equation">|ψ⟩ = |0⟩</p>
+                    <p id="bloch-coords">Bloch: (x=0, y=0, z=1)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Single Qubit State Space</h2>
+            <p>A single qubit lives in a 2-dimensional complex Hilbert space. Its state can be represented as:</p>
+            
+            <div class="formula">
+                |ψ⟩ = α|0⟩ + β|1⟩
+            </div>
+            
+            <p>where α and β are complex numbers satisfying |α|² + |β|² = 1.</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>Despite having infinite possible states (continuous parameters), a single qubit can only store one classical bit of information when measured. The power comes from superposition and interference before measurement.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Bloch Sphere Representation</h2>
+            <p>Any single qubit state can be visualized as a point on the <span class="highlight">Bloch sphere</span>:</p>
+            
+            <div class="formula">
+                |ψ⟩ = cos(θ/2)|0⟩ + e^(iφ)sin(θ/2)|1⟩
+            </div>
+            
+            <p>where:</p>
+            <ul>
+                <li><strong>θ</strong> (0 to π): Polar angle from north pole</li>
+                <li><strong>φ</strong> (0 to 2π): Azimuthal angle around equator</li>
+                <li><strong>North pole (θ=0):</strong> |0⟩ state</li>
+                <li><strong>South pole (θ=π):</strong> |1⟩ state</li>
+                <li><strong>Equator:</strong> Equal superposition states</li>
+            </ul>
+            
+            <h3>Special Points on Bloch Sphere</h3>
+            <ul>
+                <li><strong>|0⟩:</strong> (0, 0, 1) - North pole</li>
+                <li><strong>|1⟩:</strong> (0, 0, -1) - South pole</li>
+                <li><strong>|+⟩ = (|0⟩+|1⟩)/√2:</strong> (1, 0, 0) - Positive X</li>
+                <li><strong>|−⟩ = (|0⟩−|1⟩)/√2:</strong> (-1, 0, 0) - Negative X</li>
+                <li><strong>|+i⟩ = (|0⟩+i|1⟩)/√2:</strong> (0, 1, 0) - Positive Y</li>
+                <li><strong>|−i⟩ = (|0⟩−i|1⟩)/√2:</strong> (0, -1, 0) - Negative Y</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Single Qubit Rotations</h2>
+            <p>Single qubit operations are rotations on the Bloch sphere:</p>
+            
+            <h3>Rotation Operators</h3>
+            <div class="formula">
+                Rx(θ) = cos(θ/2)I - i·sin(θ/2)X<br>
+                Ry(θ) = cos(θ/2)I - i·sin(θ/2)Y<br>
+                Rz(θ) = cos(θ/2)I - i·sin(θ/2)Z
+            </div>
+            
+            <p>These rotate the Bloch vector by angle θ around the X, Y, or Z axis respectively.</p>
+            
+            <h3>Common Rotation Angles</h3>
+            <ul>
+                <li><strong>θ = π:</strong> Pauli gates (X, Y, Z) - 180° rotations</li>
+                <li><strong>θ = π/2:</strong> Quarter turns (√X, √Y, √Z)</li>
+                <li><strong>θ = π/4:</strong> Eighth turns (used in T gate)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Measurement of Single Qubits</h2>
+            <p>Measuring a qubit collapses its state to one of the basis states:</p>
+            
+            <div class="example">
+                <h3>Computational Basis Measurement</h3>
+                <p>For state |ψ⟩ = α|0⟩ + β|1⟩:</p>
+                <ul>
+                    <li>Probability of measuring |0⟩: P(0) = |α|²</li>
+                    <li>Probability of measuring |1⟩: P(1) = |β|²</li>
+                    <li>After measurement: State becomes |0⟩ or |1⟩</li>
+                </ul>
+            </div>
+            
+            <h3>Measurement in Other Bases</h3>
+            <p>We can measure in any orthonormal basis, not just {|0⟩, |1⟩}:</p>
+            <ul>
+                <li><strong>X-basis:</strong> {|+⟩, |−⟩}</li>
+                <li><strong>Y-basis:</strong> {|+i⟩, |−i⟩}</li>
+                <li><strong>Arbitrary basis:</strong> Any two orthogonal states</li>
+            </ul>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The measurement basis determines what information we extract. Measuring in the computational basis gives different results than measuring in the X-basis for the same state.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Single Qubit Dynamics</h2>
+            <p>The evolution of a single qubit is governed by the Schrödinger equation:</p>
+            
+            <div class="formula">
+                iℏ d|ψ⟩/dt = H|ψ⟩
+            </div>
+            
+            <p>where H is the Hamiltonian operator. For a time-independent Hamiltonian:</p>
+            
+            <div class="formula">
+                |ψ(t)⟩ = e^(-iHt/ℏ)|ψ(0)⟩
+            </div>
+            
+            <h3>Free Evolution</h3>
+            <p>For a qubit with energy splitting ω:</p>
+            <div class="formula">
+                H = (ℏω/2)Z
+            </div>
+            <p>The state evolves as:</p>
+            <div class="formula">
+                |ψ(t)⟩ = α|0⟩ + e^(-iωt)β|1⟩
+            </div>
+            <p>This is a rotation around the Z-axis at frequency ω.</p>
+        </div>
+
+        <div class="section">
+            <h2>Quantum State Tomography</h2>
+            <p>To fully characterize an unknown single qubit state, we need <span class="highlight">quantum state tomography</span>:</p>
+            
+            <ol>
+                <li>Prepare many copies of the state |ψ⟩</li>
+                <li>Measure in computational basis: Get P(0) and P(1)</li>
+                <li>Measure in X-basis: Apply H, then measure</li>
+                <li>Measure in Y-basis: Apply H·S†, then measure</li>
+                <li>Reconstruct state from measurement statistics</li>
+            </ol>
+            
+            <p>From these measurements, we can determine α and β (up to global phase).</p>
+        </div>
+
+        <div class="section">
+            <h2>Single Qubit Errors</h2>
+            <p>Real qubits suffer from various error mechanisms:</p>
+            
+            <h3>Bit Flip Error</h3>
+            <p>State |0⟩ ↔ |1⟩ with probability p</p>
+            <div class="formula">
+                ρ → (1-p)ρ + pXρX
+            </div>
+            
+            <h3>Phase Flip Error</h3>
+            <p>Relative phase flips with probability p</p>
+            <div class="formula">
+                ρ → (1-p)ρ + pZρZ
+            </div>
+            
+            <h3>Depolarizing Error</h3>
+            <p>State becomes completely mixed with probability p</p>
+            <div class="formula">
+                ρ → (1-p)ρ + (p/3)(XρX + YρY + ZρZ)
+            </div>
+            
+            <h3>Amplitude Damping</h3>
+            <p>Energy relaxation: |1⟩ → |0⟩</p>
+            <p>Characterized by T₁ time</p>
+            
+            <h3>Phase Damping</h3>
+            <p>Loss of coherence without energy loss</p>
+            <p>Characterized by T₂ time</p>
+        </div>
+
+        <div class="section">
+            <h2>Single Qubit Benchmarking</h2>
+            <p>To characterize single qubit gate quality:</p>
+            
+            <h3>Randomized Benchmarking</h3>
+            <ol>
+                <li>Apply random sequence of Clifford gates</li>
+                <li>Apply inverse to return to initial state</li>
+                <li>Measure fidelity vs sequence length</li>
+                <li>Extract average gate fidelity</li>
+            </ol>
+            
+            <h3>Gate Fidelity</h3>
+            <p>Measures how close actual gate is to ideal:</p>
+            <div class="formula">
+                F = |⟨ψ_ideal|ψ_actual⟩|²
+            </div>
+            
+            <p>Typical values:</p>
+            <ul>
+                <li><strong>Superconducting qubits:</strong> F > 99.9%</li>
+                <li><strong>Trapped ions:</strong> F > 99.99%</li>
+                <li><strong>Quantum dots:</strong> F > 99%</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>Single qubit operations form the foundation of quantum computing:</p>
+            <ul>
+                <li>State space: 2D complex Hilbert space with normalization</li>
+                <li>Bloch sphere: Geometric representation of qubit states</li>
+                <li>Operations: Rotations around X, Y, Z axes</li>
+                <li>Measurement: Probabilistic collapse to basis states</li>
+                <li>Errors: Bit flip, phase flip, depolarizing, damping</li>
+                <li>Characterization: Tomography and benchmarking</li>
+            </ul>
+            
+            <p>Understanding single qubit operations is essential before moving to multi-qubit systems.</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="../08-computational-view/index.html" class="btn btn-secondary">← Previous: Computational View</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../10-multi-qubits/index.html" class="btn btn-primary">Next: Multi-Qubits →</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let blochSphere, stateVector, rotationAxis;
+        let currentAxis = 'Z';
+        let theta = 0, phi = 0;
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(3, 3, 3);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0x64ffda, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            // Create Bloch sphere
+            createBlochSphere();
+            
+            // Create state vector
+            updateStateVector();
+            
+            // Add axes
+            const axesHelper = new THREE.AxesHelper(2);
+            scene.add(axesHelper);
+            
+            // Add axis labels
+            addAxisLabels();
+            
+            // Setup slider
+            document.getElementById('angle-slider').addEventListener('input', function(e) {
+                const angle = parseFloat(e.target.value);
+                document.getElementById('angle-value').textContent = angle;
+                applyRotation(angle);
+            });
+            
+            animate();
+            
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function createBlochSphere() {
+            // Wireframe sphere
+            const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+            const sphereMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x64ffda, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+            blochSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(blochSphere);
+            
+            // Equator
+            const equatorGeometry = new THREE.BufferGeometry();
+            const equatorPoints = [];
+            for (let i = 0; i <= 64; i++) {
+                const angle = (i / 64) * Math.PI * 2;
+                equatorPoints.push(new THREE.Vector3(Math.cos(angle), 0, Math.sin(angle)));
+            }
+            equatorGeometry.setFromPoints(equatorPoints);
+            const equatorMaterial = new THREE.LineBasicMaterial({ color: 0x64ffda, opacity: 0.5, transparent: true });
+            const equator = new THREE.Line(equatorGeometry, equatorMaterial);
+            scene.add(equator);
+        }
+        
+        function addAxisLabels() {
+            // X axis
+            const xGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+            const xMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const xLabel = new THREE.Mesh(xGeometry, xMaterial);
+            xLabel.position.set(1.3, 0, 0);
+            scene.add(xLabel);
+            
+            // Y axis
+            const yMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const yLabel = new THREE.Mesh(xGeometry.clone(), yMaterial);
+            yLabel.position.set(0, 1.3, 0);
+            scene.add(yLabel);
+            
+            // Z axis
+            const zMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+            const zLabel = new THREE.Mesh(xGeometry.clone(), zMaterial);
+            zLabel.position.set(0, 0, 1.3);
+            scene.add(zLabel);
+        }
+        
+        function updateStateVector() {
+            // Remove old vector
+            if (stateVector) {
+                scene.remove(stateVector);
+            }
+            
+            // Calculate Bloch coordinates
+            const x = Math.sin(theta) * Math.cos(phi);
+            const y = Math.sin(theta) * Math.sin(phi);
+            const z = Math.cos(theta);
+            
+            // Create arrow
+            const direction = new THREE.Vector3(x, y, z);
+            const origin = new THREE.Vector3(0, 0, 0);
+            const length = 1;
+            const hex = 0xffff00;
+            
+            stateVector = new THREE.ArrowHelper(direction, origin, length, hex, 0.2, 0.1);
+            scene.add(stateVector);
+            
+            // Update display
+            updateStateDisplay(x, y, z);
+        }
+        
+        function updateStateDisplay(x, y, z) {
+            // Calculate state coefficients
+            const alpha = Math.cos(theta / 2);
+            const beta = Math.sin(theta / 2);
+            
+            document.getElementById('state-equation').textContent = 
+                `|ψ⟩ = ${alpha.toFixed(3)}|0⟩ + ${beta.toFixed(3)}e^(i${phi.toFixed(2)})|1⟩`;
+            
+            document.getElementById('bloch-coords').textContent = 
+                `Bloch: (x=${x.toFixed(3)}, y=${y.toFixed(3)}, z=${z.toFixed(3)})`;
+        }
+        
+        function setAxis(axis) {
+            currentAxis = axis;
+            
+            // Remove old rotation axis indicator
+            if (rotationAxis) {
+                scene.remove(rotationAxis);
+            }
+            
+            // Add new rotation axis indicator
+            let direction;
+            let color;
+            switch(axis) {
+                case 'X':
+                    direction = new THREE.Vector3(1, 0, 0);
+                    color = 0xff0000;
+                    break;
+                case 'Y':
+                    direction = new THREE.Vector3(0, 1, 0);
+                    color = 0x00ff00;
+                    break;
+                case 'Z':
+                    direction = new THREE.Vector3(0, 0, 1);
+                    color = 0x0000ff;
+                    break;
+            }
+            
+            rotationAxis = new THREE.ArrowHelper(direction, new THREE.Vector3(0, 0, 0), 1.5, color, 0.3, 0.2);
+            scene.add(rotationAxis);
+            
+            // Reset angle slider
+            document.getElementById('angle-slider').value = 0;
+            document.getElementById('angle-value').textContent = 0;
+            resetState();
+        }
+        
+        function applyRotation(angleDeg) {
+            const angleRad = angleDeg * Math.PI / 180;
+            
+            // Start from |0⟩ state
+            let newTheta = 0;
+            let newPhi = 0;
+            
+            switch(currentAxis) {
+                case 'X':
+                    newTheta = angleRad;
+                    newPhi = 0;
+                    break;
+                case 'Y':
+                    newTheta = angleRad;
+                    newPhi = Math.PI / 2;
+                    break;
+                case 'Z':
+                    newTheta = 0;
+                    newPhi = angleRad;
+                    break;
+            }
+            
+            theta = newTheta;
+            phi = newPhi;
+            
+            updateStateVector();
+        }
+        
+        function resetState() {
+            theta = 0;
+            phi = 0;
+            updateStateVector();
+        }
+        
+        function setState(state) {
+            switch(state) {
+                case 'plus':
+                    theta = Math.PI / 2;
+                    phi = 0;
+                    break;
+                case 'minus':
+                    theta = Math.PI / 2;
+                    phi = Math.PI;
+                    break;
+            }
+            updateStateVector();
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate sphere slowly
+            if (blochSphere) {
+                blochSphere.rotation.y += 0.002;
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
