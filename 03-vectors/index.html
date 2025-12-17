@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vectors Recap - Qubits</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #0a0a0a;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📐 Vectors Recap</h1>
+            <p class="subtitle">Mathematical Foundation for Quantum States</p>
+        </header>
+
+        <section class="section">
+            <h2>Why Vectors in Quantum Computing?</h2>
+            <p>
+                Vectors are the mathematical language of quantum mechanics. Quantum states are represented 
+                as vectors in a complex vector space called Hilbert space. Understanding vector operations 
+                is essential for working with qubits and quantum algorithms.
+            </p>
+            
+            <div id="canvas-container"></div>
+            
+            <div class="key-point">
+                <h3>Key Insight</h3>
+                <p>
+                    A vector is a collection of mathematical objects where the algebra of individual 
+                    elements extends to the entire collection. In quantum computing, qubits are represented 
+                    as vectors, and quantum operations are linear transformations on these vectors.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Vector Basics</h2>
+            <p>
+                A vector is an ordered list of numbers (real or complex) that can be represented as:
+            </p>
+            <div class="formula">
+                v = [v₁, v₂, ..., vₙ]ᵀ
+            </div>
+            <p>
+                In quantum computing, we typically work with column vectors in ℂⁿ (n-dimensional complex space).
+            </p>
+            
+            <div class="example">
+                <h3>Quantum State Vectors</h3>
+                <ul>
+                    <li><strong>|0⟩:</strong> [1, 0]ᵀ (basis state 0)</li>
+                    <li><strong>|1⟩:</strong> [0, 1]ᵀ (basis state 1)</li>
+                    <li><strong>|+⟩:</strong> [1/√2, 1/√2]ᵀ (superposition)</li>
+                    <li><strong>|−⟩:</strong> [1/√2, -1/√2]ᵀ (superposition)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Vector Operations</h2>
+            
+            <div class="highlight">
+                <h3>1. Addition</h3>
+                <p>Add corresponding components:</p>
+                <div class="formula">
+                    [a₁, a₂]ᵀ + [b₁, b₂]ᵀ = [a₁+b₁, a₂+b₂]ᵀ
+                </div>
+                <p><strong>Example:</strong> [1, 2]ᵀ + [3, 4]ᵀ = [4, 6]ᵀ</p>
+            </div>
+
+            <div class="highlight">
+                <h3>2. Scalar Multiplication</h3>
+                <p>Multiply each component by a scalar:</p>
+                <div class="formula">
+                    c · [a₁, a₂]ᵀ = [c·a₁, c·a₂]ᵀ
+                </div>
+                <p><strong>Example:</strong> 2 · [1, 3]ᵀ = [2, 6]ᵀ</p>
+            </div>
+
+            <div class="highlight">
+                <h3>3. Inner Product (Dot Product)</h3>
+                <p>For complex vectors, use conjugate transpose:</p>
+                <div class="formula">
+                    ⟨u|v⟩ = u₁*v₁ + u₂*v₂ + ... + uₙ*vₙ
+                </div>
+                <p>where * denotes complex conjugate</p>
+                <p><strong>Example:</strong> ⟨[1, 2]|[3, 4]⟩ = 1·3 + 2·4 = 11</p>
+            </div>
+
+            <div class="highlight">
+                <h3>4. Norm (Magnitude)</h3>
+                <p>The length of a vector:</p>
+                <div class="formula">
+                    ||v|| = √(⟨v|v⟩) = √(|v₁|² + |v₂|² + ... + |vₙ|²)
+                </div>
+                <p><strong>Normalization:</strong> v̂ = v/||v||</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Common Vector Operations in Quantum Computing</h2>
+            
+            <div class="code-block">
+                <h3>Addition</h3>
+                <p>
+                    Vector addition is used to create superposition states. When we add basis states 
+                    with appropriate coefficients, we create quantum superpositions.
+                </p>
+                <div class="formula">
+                    |+⟩ = (|0⟩ + |1⟩)/√2 = ([1,0]ᵀ + [0,1]ᵀ)/√2 = [1/√2, 1/√2]ᵀ
+                </div>
+            </div>
+
+            <div class="code-block">
+                <h3>Multiplication</h3>
+                <p>
+                    Scalar multiplication scales quantum amplitudes. Complex scalar multiplication 
+                    introduces phase factors crucial for quantum interference.
+                </p>
+                <div class="formula">
+                    e^(iφ)|ψ⟩ (global phase factor)
+                </div>
+            </div>
+
+            <div class="code-block">
+                <h3>Projections</h3>
+                <p>
+                    Projection onto basis states gives measurement probabilities:
+                </p>
+                <div class="formula">
+                    P(|0⟩) = |⟨0|ψ⟩|² = |α|²
+                </div>
+            </div>
+
+            <div class="code-block">
+                <h3>Rotations</h3>
+                <p>
+                    Quantum gates perform rotations in the state space. These are unitary 
+                    transformations that preserve the norm of state vectors.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>Linear Transforms</h3>
+                <p>
+                    Quantum gates are represented by matrices that perform linear transformations 
+                    on state vectors:
+                </p>
+                <div class="formula">
+                    |ψ'⟩ = U|ψ⟩
+                </div>
+            </div>
+
+            <div class="code-block">
+                <h3>Functions</h3>
+                <p>
+                    Quantum algorithms can be viewed as functions mapping input state vectors 
+                    to output state vectors through a sequence of unitary operations.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>Eigenvalues</h3>
+                <p>
+                    Eigenvalues and eigenvectors are crucial for understanding quantum measurements 
+                    and observable properties:
+                </p>
+                <div class="formula">
+                    A|v⟩ = λ|v⟩
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Vector Spaces</h2>
+            <p>
+                A vector space is a set of vectors with defined addition and scalar multiplication 
+                operations that satisfy certain axioms:
+            </p>
+            
+            <div class="example">
+                <h3>Vector Space Axioms</h3>
+                <ul>
+                    <li><strong>Closure under addition:</strong> u + v is in the space</li>
+                    <li><strong>Closure under scalar multiplication:</strong> c·v is in the space</li>
+                    <li><strong>Associativity:</strong> (u + v) + w = u + (v + w)</li>
+                    <li><strong>Commutativity:</strong> u + v = v + u</li>
+                    <li><strong>Identity element:</strong> v + 0 = v</li>
+                    <li><strong>Inverse element:</strong> v + (-v) = 0</li>
+                    <li><strong>Distributivity:</strong> c(u + v) = cu + cv</li>
+                </ul>
+            </div>
+            
+            <div class="key-point">
+                <h3>Hilbert Space</h3>
+                <p>
+                    Quantum states live in a complex vector space called Hilbert space. This is 
+                    a complete inner product space where quantum mechanics is formulated. For a 
+                    single qubit, the Hilbert space is ℂ² (2-dimensional complex space).
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Basis Vectors</h2>
+            <p>
+                A basis is a set of linearly independent vectors that span the entire vector space. 
+                Any vector in the space can be written as a linear combination of basis vectors.
+            </p>
+            
+            <div class="highlight">
+                <h3>Computational Basis</h3>
+                <p>
+                    The standard basis for a single qubit:
+                </p>
+                <ul>
+                    <li><strong>|0⟩ = [1, 0]ᵀ:</strong> Computational basis state 0</li>
+                    <li><strong>|1⟩ = [0, 1]ᵀ:</strong> Computational basis state 1</li>
+                </ul>
+                <p>Any qubit state can be written as: |ψ⟩ = α|0⟩ + β|1⟩</p>
+            </div>
+
+            <div class="highlight">
+                <h3>Hadamard Basis</h3>
+                <p>
+                    An alternative basis for qubits:
+                </p>
+                <ul>
+                    <li><strong>|+⟩ = (|0⟩ + |1⟩)/√2:</strong> Plus state</li>
+                    <li><strong>|−⟩ = (|0⟩ − |1⟩)/√2:</strong> Minus state</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h3>Circular Basis</h3>
+                <p>
+                    Another useful basis:
+                </p>
+                <ul>
+                    <li><strong>|+i⟩ = (|0⟩ + i|1⟩)/√2:</strong> Right circular</li>
+                    <li><strong>|−i⟩ = (|0⟩ − i|1⟩)/√2:</strong> Left circular</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Orthogonality and Orthonormality</h2>
+            
+            <div class="code-block">
+                <h3>Orthogonal Vectors</h3>
+                <p>
+                    Two vectors are orthogonal if their inner product is zero:
+                </p>
+                <div class="formula">
+                    ⟨u|v⟩ = 0
+                </div>
+                <p><strong>Example:</strong> |0⟩ and |1⟩ are orthogonal: ⟨0|1⟩ = 0</p>
+            </div>
+
+            <div class="code-block">
+                <h3>Orthonormal Basis</h3>
+                <p>
+                    A basis is orthonormal if all basis vectors are:
+                </p>
+                <ul>
+                    <li>Orthogonal to each other: ⟨eᵢ|eⱼ⟩ = 0 for i ≠ j</li>
+                    <li>Normalized: ⟨eᵢ|eᵢ⟩ = 1</li>
+                </ul>
+                <p>
+                    The computational basis {|0⟩, |1⟩} is orthonormal.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Linear Independence</h2>
+            <p>
+                Vectors v₁, v₂, ..., vₙ are linearly independent if:
+            </p>
+            <div class="formula">
+                c₁v₁ + c₂v₂ + ... + cₙvₙ = 0 ⟹ c₁ = c₂ = ... = cₙ = 0
+            </div>
+            <p>
+                In other words, no vector can be written as a linear combination of the others.
+            </p>
+            
+            <div class="key-point">
+                <h3>Importance in Quantum Computing</h3>
+                <p>
+                    Linearly independent basis vectors ensure that quantum states have unique 
+                    representations. This is crucial for unambiguous measurement outcomes and 
+                    quantum information processing.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Tensor Products</h2>
+            <p>
+                For multi-qubit systems, we use tensor products to combine vector spaces:
+            </p>
+            <div class="formula">
+                |ψ⟩ ⊗ |φ⟩ = |ψφ⟩
+            </div>
+            
+            <div class="example">
+                <h3>Two-Qubit States</h3>
+                <p>
+                    For two qubits, the state space is ℂ² ⊗ ℂ² = ℂ⁴:
+                </p>
+                <ul>
+                    <li><strong>|00⟩ = |0⟩ ⊗ |0⟩:</strong> [1, 0, 0, 0]ᵀ</li>
+                    <li><strong>|01⟩ = |0⟩ ⊗ |1⟩:</strong> [0, 1, 0, 0]ᵀ</li>
+                    <li><strong>|10⟩ = |1⟩ ⊗ |0⟩:</strong> [0, 0, 1, 0]ᵀ</li>
+                    <li><strong>|11⟩ = |1⟩ ⊗ |1⟩:</strong> [0, 0, 0, 1]ᵀ</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Why Vectors Matter in Quantum Computing</h2>
+            <div class="key-point">
+                <h3>Essential for Quantum Mechanics</h3>
+                <ul>
+                    <li><strong>State Representation:</strong> Quantum states are vectors in Hilbert space</li>
+                    <li><strong>Superposition:</strong> Linear combinations of basis vectors</li>
+                    <li><strong>Measurement:</strong> Inner products give measurement probabilities</li>
+                    <li><strong>Evolution:</strong> Quantum gates are linear transformations</li>
+                    <li><strong>Entanglement:</strong> Tensor products describe multi-qubit systems</li>
+                    <li><strong>Interference:</strong> Vector addition enables quantum interference</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../02-complex-numbers/index.html" class="btn">← Previous: Complex Numbers</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../04-bit-vs-qubit/index.html" class="btn btn-primary">Next: Bit vs Qubit →</a>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+        
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(5, 5, 5);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+        
+        // Add axes
+        const axesHelper = new THREE.AxesHelper(5);
+        scene.add(axesHelper);
+        
+        // Add grid
+        const gridHelper = new THREE.GridHelper(10, 10, 0x444444, 0x222222);
+        scene.add(gridHelper);
+        
+        // Create several vectors
+        const vectors = [
+            { x: 3, y: 2, z: 1, color: 0xff6b6b, label: 'v₁' },
+            { x: 1, y: 3, z: 2, color: 0x4ecdc4, label: 'v₂' },
+            { x: -2, y: 2, z: 3, color: 0xffd93d, label: 'v₃' },
+            { x: 2, y: -1, z: 2, color: 0xa8e6cf, label: 'v₄' }
+        ];
+        
+        const arrows = [];
+        vectors.forEach(v => {
+            const dir = new THREE.Vector3(v.x, v.y, v.z).normalize();
+            const length = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+            const origin = new THREE.Vector3(0, 0, 0);
+            const arrow = new THREE.ArrowHelper(dir, origin, length, v.color, 0.5, 0.3);
+            scene.add(arrow);
+            arrows.push({ arrow, v, originalLength: length });
+            
+            // Add sphere at tip
+            const sphereGeometry = new THREE.SphereGeometry(0.15, 16, 16);
+            const sphereMaterial = new THREE.MeshPhongMaterial({ color: v.color });
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            sphere.position.set(v.x, v.y, v.z);
+            scene.add(sphere);
+        });
+        
+        // Add basis vectors (thicker, different style)
+        const basisVectors = [
+            { x: 1, y: 0, z: 0, color: 0xff0000, label: 'x' },
+            { x: 0, y: 1, z: 0, color: 0x00ff00, label: 'y' },
+            { x: 0, y: 0, z: 1, color: 0x0000ff, label: 'z' }
+        ];
+        
+        basisVectors.forEach(v => {
+            const dir = new THREE.Vector3(v.x, v.y, v.z);
+            const origin = new THREE.Vector3(0, 0, 0);
+            const arrow = new THREE.ArrowHelper(dir, origin, 4, v.color, 0.6, 0.4);
+            scene.add(arrow);
+        });
+        
+        // Animation
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Pulse the vectors
+            arrows.forEach((item, index) => {
+                const pulse = 1 + 0.15 * Math.sin(time * 2 + index);
+                item.arrow.setLength(
+                    item.originalLength * pulse,
+                    0.5 * pulse,
+                    0.3 * pulse
+                );
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
