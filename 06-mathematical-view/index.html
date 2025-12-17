@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical View of Qubits - Interactive 3D Visualization</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .matrix-display {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        .vector-notation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .bracket {
+            font-size: 48px;
+            color: #64ffda;
+            margin: 0 10px;
+        }
+        
+        .vector-elements {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concept 6: Mathematical View of Qubits</h1>
+        
+        <div class="section">
+            <h2>Interactive 3D Visualization</h2>
+            <p>Explore the mathematical representation of qubits as vectors in complex Hilbert space. The visualization shows the vector space structure and mathematical operations.</p>
+            <div id="canvas-container"></div>
+        </div>
+
+        <div class="section">
+            <h2>Mathematical Foundation</h2>
+            <p>From a mathematical perspective, a qubit is a <span class="highlight">unit vector</span> in a two-dimensional complex vector space called <span class="highlight">Hilbert space</span> (ℋ²).</p>
+            
+            <h3>Vector Representation</h3>
+            <p>A qubit state |ψ⟩ is represented as a column vector:</p>
+            
+            <div class="vector-notation">
+                <span>|ψ⟩ =</span>
+                <span class="bracket">[</span>
+                <div class="vector-elements">
+                    <span>α</span>
+                    <span>β</span>
+                </div>
+                <span class="bracket">]</span>
+                <span>where α, β ∈ ℂ</span>
+            </div>
+            
+            <div class="formula">
+                |ψ⟩ = α|0⟩ + β|1⟩
+            </div>
+            
+            <p>where the computational basis states are:</p>
+            
+            <div class="matrix-display">
+                |0⟩ = [1]    |1⟩ = [0]
+                      [0]          [1]
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Hilbert Space Structure</h2>
+            <p>The qubit state space is a <span class="highlight">complex Hilbert space</span> with specific mathematical properties:</p>
+            
+            <ol>
+                <li><strong>Vector Space:</strong> Closed under addition and scalar multiplication</li>
+                <li><strong>Inner Product:</strong> Defines angles and lengths between vectors</li>
+                <li><strong>Completeness:</strong> All Cauchy sequences converge</li>
+                <li><strong>Dimensionality:</strong> Two-dimensional (for single qubit)</li>
+            </ol>
+            
+            <h3>Inner Product</h3>
+            <p>The inner product between two qubit states is defined as:</p>
+            
+            <div class="formula">
+                ⟨φ|ψ⟩ = α*₁α₂ + β*₁β₂
+            </div>
+            
+            <p>where * denotes complex conjugation.</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The inner product ⟨φ|ψ⟩ gives the probability amplitude for measuring state |ψ⟩ and finding it in state |φ⟩. The probability is |⟨φ|ψ⟩|².</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Normalization Constraint</h2>
+            <p>All valid qubit states must satisfy the <span class="highlight">normalization condition</span>:</p>
+            
+            <div class="formula">
+                ⟨ψ|ψ⟩ = |α|² + |β|² = 1
+            </div>
+            
+            <p>This ensures that the total probability of all measurement outcomes equals 1.</p>
+            
+            <h3>Geometric Interpretation</h3>
+            <p>The normalization constraint means all valid qubit states lie on the surface of a unit sphere in complex 2D space. When we account for the global phase (which is unobservable), this reduces to the <span class="highlight">Bloch sphere</span> - a unit sphere in 3D real space.</p>
+            
+            <div class="example">
+                <h3>Example: Normalizing a State</h3>
+                <p>Given an unnormalized state: |ψ⟩ = 3|0⟩ + 4|1⟩</p>
+                <p>Calculate norm: ||ψ|| = √(3² + 4²) = √25 = 5</p>
+                <p>Normalized state: |ψ⟩ = (3/5)|0⟩ + (4/5)|1⟩</p>
+                <p>Verify: (3/5)² + (4/5)² = 9/25 + 16/25 = 25/25 = 1 ✓</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Bra-Ket Notation</h2>
+            <p>Quantum mechanics uses <span class="highlight">Dirac notation</span> (bra-ket notation) for mathematical elegance:</p>
+            
+            <ul>
+                <li><strong>Ket |ψ⟩:</strong> Column vector representing a quantum state</li>
+                <li><strong>Bra ⟨ψ|:</strong> Row vector (conjugate transpose of ket)</li>
+                <li><strong>Bracket ⟨φ|ψ⟩:</strong> Inner product between states</li>
+                <li><strong>Outer product |ψ⟩⟨φ|:</strong> Operator/matrix</li>
+            </ul>
+            
+            <h3>Bra-Ket Operations</h3>
+            <div class="matrix-display">
+Ket:    |ψ⟩ = [α]
+              [β]
+
+Bra:    ⟨ψ| = [α* β*]
+
+Inner:  ⟨φ|ψ⟩ = α*₁α₂ + β*₁β₂  (scalar)
+
+Outer:  |ψ⟩⟨φ| = [α α*₁  α β*₁]  (matrix)
+                 [β α*₁  β β*₁]
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Basis States and Completeness</h2>
+            <p>The computational basis {|0⟩, |1⟩} forms an <span class="highlight">orthonormal basis</span> for the qubit state space:</p>
+            
+            <h3>Orthonormality</h3>
+            <div class="formula">
+                ⟨0|0⟩ = 1,  ⟨1|1⟩ = 1  (normalized)<br>
+                ⟨0|1⟩ = 0,  ⟨1|0⟩ = 0  (orthogonal)
+            </div>
+            
+            <h3>Completeness Relation</h3>
+            <p>Any qubit state can be expressed as a linear combination of basis states:</p>
+            
+            <div class="formula">
+                |ψ⟩ = ⟨0|ψ⟩|0⟩ + ⟨1|ψ⟩|1⟩ = α|0⟩ + β|1⟩
+            </div>
+            
+            <p>The completeness relation states:</p>
+            
+            <div class="formula">
+                |0⟩⟨0| + |1⟩⟨1| = I  (identity operator)
+            </div>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The completeness relation means we can decompose any operator or state using the basis states. This is fundamental for quantum measurement theory.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Alternative Bases</h2>
+            <p>While {|0⟩, |1⟩} is the standard computational basis, we can use other orthonormal bases:</p>
+            
+            <h3>Hadamard Basis</h3>
+            <div class="formula">
+                |+⟩ = (|0⟩ + |1⟩)/√2 = [1/√2]<br>
+                                        [1/√2]<br><br>
+                |−⟩ = (|0⟩ − |1⟩)/√2 = [ 1/√2]<br>
+                                        [−1/√2]
+            </div>
+            
+            <h3>Circular Basis</h3>
+            <div class="formula">
+                |+i⟩ = (|0⟩ + i|1⟩)/√2 = [1/√2]<br>
+                                          [i/√2]<br><br>
+                |−i⟩ = (|0⟩ − i|1⟩)/√2 = [ 1/√2]<br>
+                                          [−i/√2]
+            </div>
+            
+            <p>Each basis is equally valid for describing qubit states, and the choice depends on the physical measurement being performed.</p>
+        </div>
+
+        <div class="section">
+            <h2>Linear Operators and Matrices</h2>
+            <p>Quantum operations on qubits are represented by <span class="highlight">linear operators</span>, which correspond to matrices acting on state vectors.</p>
+            
+            <h3>Unitary Operators</h3>
+            <p>Valid quantum operations must be <span class="highlight">unitary</span> (preserve normalization):</p>
+            
+            <div class="formula">
+                U†U = UU† = I
+            </div>
+            
+            <p>where U† is the conjugate transpose (Hermitian adjoint) of U.</p>
+            
+            <h3>Common Single-Qubit Gates</h3>
+            <div class="matrix-display">
+Pauli-X (NOT):  X = [0 1]
+                    [1 0]
+
+Pauli-Y:        Y = [0 −i]
+                    [i  0]
+
+Pauli-Z:        Z = [1  0]
+                    [0 −1]
+
+Hadamard:       H = 1/√2 [1  1]
+                         [1 −1]
+
+Phase:          S = [1 0]
+                    [0 i]
+
+T-gate:         T = [1 0]
+                    [0 e^(iπ/4)]
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Measurement Operators</h2>
+            <p>Quantum measurement is described mathematically using <span class="highlight">projection operators</span>:</p>
+            
+            <h3>Computational Basis Measurement</h3>
+            <div class="formula">
+                P₀ = |0⟩⟨0| = [1 0]<br>
+                              [0 0]<br><br>
+                P₁ = |1⟩⟨1| = [0 0]<br>
+                              [0 1]
+            </div>
+            
+            <p>The probability of measuring outcome i is:</p>
+            
+            <div class="formula">
+                P(i) = ⟨ψ|Pᵢ|ψ⟩ = ||Pᵢ|ψ⟩||²
+            </div>
+            
+            <p>After measurement, the state collapses to:</p>
+            
+            <div class="formula">
+                |ψ'⟩ = Pᵢ|ψ⟩ / √⟨ψ|Pᵢ|ψ⟩
+            </div>
+            
+            <div class="example">
+                <h3>Example: Measuring |+⟩</h3>
+                <p>State: |+⟩ = (|0⟩ + |1⟩)/√2</p>
+                <p>P(0) = |⟨0|+⟩|² = |(1/√2)|² = 1/2</p>
+                <p>P(1) = |⟨1|+⟩|² = |(1/√2)|² = 1/2</p>
+                <p>If outcome is 0: |ψ'⟩ = |0⟩</p>
+                <p>If outcome is 1: |ψ'⟩ = |1⟩</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Tensor Product for Multi-Qubit Systems</h2>
+            <p>Multiple qubits are described using the <span class="highlight">tensor product</span> (⊗):</p>
+            
+            <h3>Two-Qubit State Space</h3>
+            <p>For two qubits, the state space is ℋ² ⊗ ℋ² = ℋ⁴ (4-dimensional):</p>
+            
+            <div class="formula">
+                |ψ⟩₁₂ = (α₁|0⟩ + β₁|1⟩) ⊗ (α₂|0⟩ + β₂|1⟩)
+            </div>
+            
+            <p>Computational basis for two qubits:</p>
+            
+            <div class="matrix-display">
+|00⟩ = [1]    |01⟩ = [0]    |10⟩ = [0]    |11⟩ = [0]
+      [0]          [1]          [0]          [0]
+      [0]          [0]          [1]          [0]
+      [0]          [0]          [0]          [1]
+            </div>
+            
+            <h3>Tensor Product Properties</h3>
+            <ul>
+                <li>Dimension: dim(ℋ₁ ⊗ ℋ₂) = dim(ℋ₁) × dim(ℋ₂)</li>
+                <li>n qubits → 2ⁿ dimensional space</li>
+                <li>Exponential growth enables quantum advantage</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Density Matrix Formalism</h2>
+            <p>For mixed states (statistical mixtures), we use the <span class="highlight">density matrix</span> ρ:</p>
+            
+            <h3>Pure State</h3>
+            <div class="formula">
+                ρ = |ψ⟩⟨ψ|
+            </div>
+            
+            <h3>Mixed State</h3>
+            <div class="formula">
+                ρ = Σᵢ pᵢ|ψᵢ⟩⟨ψᵢ|
+            </div>
+            
+            <p>where pᵢ are classical probabilities (Σᵢ pᵢ = 1).</p>
+            
+            <h3>Properties</h3>
+            <ul>
+                <li>Hermitian: ρ† = ρ</li>
+                <li>Positive semi-definite: ⟨ψ|ρ|ψ⟩ ≥ 0 for all |ψ⟩</li>
+                <li>Unit trace: Tr(ρ) = 1</li>
+                <li>Pure state: Tr(ρ²) = 1</li>
+                <li>Mixed state: Tr(ρ²) < 1</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Mathematical Properties Summary</h2>
+            <p>The mathematical view of qubits provides a rigorous framework:</p>
+            
+            <ul>
+                <li><strong>State Space:</strong> Complex Hilbert space ℋ²</li>
+                <li><strong>States:</strong> Unit vectors |ψ⟩ with ||ψ|| = 1</li>
+                <li><strong>Operations:</strong> Unitary matrices U with U†U = I</li>
+                <li><strong>Measurement:</strong> Projection operators Pᵢ with Σᵢ Pᵢ = I</li>
+                <li><strong>Composition:</strong> Tensor product ⊗ for multi-qubit systems</li>
+                <li><strong>Mixed States:</strong> Density matrices ρ with Tr(ρ) = 1</li>
+            </ul>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The mathematical formalism of quantum mechanics is built on linear algebra over complex numbers. Understanding this mathematical structure is essential for quantum computing and quantum information theory.</p>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="../05-qubit-from-bit/index.html" class="btn btn-secondary">← Previous: Qubit from Bit</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../07-physical-view/index.html" class="btn btn-primary">Next: Physical View →</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let vectors = [];
+        let axes;
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(3, 3, 3);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x0a0a0a, 1);
+            container.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0x64ffda, 1, 100);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            createAxes();
+            createVectorSpace();
+            createBasisVectors();
+            
+            animate();
+        }
+        
+        function createAxes() {
+            const axesGroup = new THREE.Group();
+            
+            const createAxis = (color, direction, length = 2.5) => {
+                const geometry = new THREE.CylinderGeometry(0.02, 0.02, length, 8);
+                const material = new THREE.MeshPhongMaterial({ color });
+                const axis = new THREE.Mesh(geometry, material);
+                
+                if (direction === 'x') {
+                    axis.rotation.z = Math.PI / 2;
+                    axis.position.x = length / 2;
+                } else if (direction === 'y') {
+                    axis.position.y = length / 2;
+                } else {
+                    axis.rotation.x = Math.PI / 2;
+                    axis.position.z = length / 2;
+                }
+                
+                return axis;
+            };
+            
+            axesGroup.add(createAxis(0xff0000, 'x'));
+            axesGroup.add(createAxis(0x00ff00, 'y'));
+            axesGroup.add(createAxis(0x0000ff, 'z'));
+            
+            const gridHelper = new THREE.GridHelper(4, 20, 0x64ffda, 0x1a1a2e);
+            gridHelper.material.opacity = 0.2;
+            gridHelper.material.transparent = true;
+            axesGroup.add(gridHelper);
+            
+            scene.add(axesGroup);
+            axes = axesGroup;
+        }
+        
+        function createVectorSpace() {
+            // Create a visual representation of the 2D complex vector space
+            const planeGeometry = new THREE.PlaneGeometry(3, 3);
+            const planeMaterial = new THREE.MeshPhongMaterial({
+                color: 0x64ffda,
+                transparent: true,
+                opacity: 0.1,
+                side: THREE.DoubleSide
+            });
+            const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+            plane.rotation.x = Math.PI / 2;
+            scene.add(plane);
+        }
+        
+        function createBasisVectors() {
+            // |0⟩ basis vector
+            const dir0 = new THREE.Vector3(0, 0, 1);
+            const arrow0 = new THREE.ArrowHelper(dir0, new THREE.Vector3(0, 0, 0), 1.5, 0xff0000, 0.3, 0.15);
+            scene.add(arrow0);
+            vectors.push(arrow0);
+            
+            const sphere0 = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 16, 16),
+                new THREE.MeshPhongMaterial({ color: 0xff0000, emissive: 0xff0000, emissiveIntensity: 0.5 })
+            );
+            sphere0.position.copy(dir0.multiplyScalar(1.5));
+            scene.add(sphere0);
+            
+            // |1⟩ basis vector
+            const dir1 = new THREE.Vector3(0, 0, -1);
+            const arrow1 = new THREE.ArrowHelper(dir1, new THREE.Vector3(0, 0, 0), 1.5, 0x00ffff, 0.3, 0.15);
+            scene.add(arrow1);
+            vectors.push(arrow1);
+            
+            const sphere1 = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 16, 16),
+                new THREE.MeshPhongMaterial({ color: 0x00ffff, emissive: 0x00ffff, emissiveIntensity: 0.5 })
+            );
+            sphere1.position.copy(dir1.multiplyScalar(1.5));
+            scene.add(sphere1);
+            
+            // |+⟩ superposition vector
+            const dirPlus = new THREE.Vector3(1, 0, 0);
+            const arrowPlus = new THREE.ArrowHelper(dirPlus, new THREE.Vector3(0, 0, 0), 1.5, 0x64ffda, 0.3, 0.15);
+            scene.add(arrowPlus);
+            vectors.push(arrowPlus);
+            
+            const spherePlus = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 16, 16),
+                new THREE.MeshPhongMaterial({ color: 0x64ffda, emissive: 0x64ffda, emissiveIntensity: 0.5 })
+            );
+            spherePlus.position.copy(dirPlus.multiplyScalar(1.5));
+            scene.add(spherePlus);
+            
+            // |+i⟩ superposition vector
+            const dirPlusI = new THREE.Vector3(0, 1, 0);
+            const arrowPlusI = new THREE.ArrowHelper(dirPlusI, new THREE.Vector3(0, 0, 0), 1.5, 0xffaa00, 0.3, 0.15);
+            scene.add(arrowPlusI);
+            vectors.push(arrowPlusI);
+            
+            const spherePlusI = new THREE.Mesh(
+                new THREE.SphereGeometry(0.1, 16, 16),
+                new THREE.MeshPhongMaterial({ color: 0xffaa00, emissive: 0xffaa00, emissiveIntensity: 0.5 })
+            );
+            spherePlusI.position.copy(dirPlusI.multiplyScalar(1.5));
+            scene.add(spherePlusI);
+            
+            // Add labels
+            const createLabel = (text, position, color) => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 128;
+                canvas.height = 64;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = color;
+                ctx.font = 'bold 48px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(text, 64, 32);
+                
+                const texture = new THREE.CanvasTexture(canvas);
+                const material = new THREE.SpriteMaterial({ map: texture });
+                const sprite = new THREE.Sprite(material);
+                sprite.position.copy(position);
+                sprite.scale.set(0.5, 0.25, 1);
+                return sprite;
+            };
+            
+            scene.add(createLabel('|0⟩', new THREE.Vector3(0, 0, 2), '#ff0000'));
+            scene.add(createLabel('|1⟩', new THREE.Vector3(0, 0, -2), '#00ffff'));
+            scene.add(createLabel('|+⟩', new THREE.Vector3(2, 0, 0), '#64ffda'));
+            scene.add(createLabel('|+i⟩', new THREE.Vector3(0, 2, 0), '#ffaa00'));
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            controls.update();
+            
+            const time = Date.now() * 0.001;
+            
+            // Animate vectors with pulsing effect
+            vectors.forEach((vector, index) => {
+                const scale = 1 + 0.1 * Math.sin(time * 2 + index * Math.PI / 2);
+                vector.setLength(1.5 * scale, 0.3 * scale, 0.15 * scale);
+            });
+            
+            renderer.render(scene, camera);
+        }
+        
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+        
+        init();
+    </script>
+</body>
+</html>
