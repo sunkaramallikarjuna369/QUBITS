@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Qubit Systems - Interactive 3D Visualization</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .control-panel {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group button {
+            background: #64ffda;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-group button:hover {
+            background: #52d4c2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        .state-display {
+            background: rgba(100, 255, 218, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #64ffda;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concept 10: Multi-Qubit Systems</h1>
+        
+        <div class="section">
+            <h2>Interactive 3D Visualization</h2>
+            <p>Explore multi-qubit systems and their exponentially growing state space. The visualization shows how multiple qubits combine to form larger quantum systems.</p>
+            <div id="canvas-container"></div>
+            
+            <div class="control-panel">
+                <div class="control-group">
+                    <button onclick="showTwoQubit()">2-Qubit System</button>
+                    <button onclick="showThreeQubit()">3-Qubit System</button>
+                    <button onclick="showCNOT()">CNOT Gate</button>
+                    <button onclick="showBellState()">Bell State</button>
+                </div>
+                
+                <div class="state-display">
+                    <h3>Current State:</h3>
+                    <p id="state-info">2-qubit system: 4-dimensional Hilbert space</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Multi-Qubit State Space</h2>
+            <p>When we combine n qubits, the state space grows exponentially:</p>
+            
+            <div class="formula">
+                n qubits → 2ⁿ dimensional Hilbert space
+            </div>
+            
+            <ul>
+                <li><strong>1 qubit:</strong> 2 dimensions (|0⟩, |1⟩)</li>
+                <li><strong>2 qubits:</strong> 4 dimensions (|00⟩, |01⟩, |10⟩, |11⟩)</li>
+                <li><strong>3 qubits:</strong> 8 dimensions (|000⟩ through |111⟩)</li>
+                <li><strong>n qubits:</strong> 2ⁿ dimensions</li>
+            </ul>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>This exponential growth is both the power and the challenge of quantum computing. It enables quantum parallelism but makes classical simulation intractable for large systems.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Tensor Product Structure</h2>
+            <p>Multi-qubit states are formed using the <span class="highlight">tensor product</span> (⊗):</p>
+            
+            <h3>Two-Qubit System</h3>
+            <div class="formula">
+                |ψ⟩ = (α₀|0⟩ + α₁|1⟩) ⊗ (β₀|0⟩ + β₁|1⟩)<br>
+                = α₀β₀|00⟩ + α₀β₁|01⟩ + α₁β₀|10⟩ + α₁β₁|11⟩
+            </div>
+            
+            <p>General form:</p>
+            <div class="formula">
+                |ψ⟩ = c₀₀|00⟩ + c₀₁|01⟩ + c₁₀|10⟩ + c₁₁|11⟩
+            </div>
+            
+            <p>where Σ|cᵢⱼ|² = 1 (normalization)</p>
+            
+            <h3>Separable vs Entangled States</h3>
+            <p><strong>Separable:</strong> Can be written as tensor product of single-qubit states</p>
+            <div class="formula">
+                |ψ⟩ = |ψ₁⟩ ⊗ |ψ₂⟩
+            </div>
+            
+            <p><strong>Entangled:</strong> Cannot be factored into single-qubit states</p>
+            <div class="formula">
+                |Φ⁺⟩ = (|00⟩ + |11⟩)/√2 (Bell state - entangled!)
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Two-Qubit Gates</h2>
+            <p>Two-qubit gates create correlations between qubits:</p>
+            
+            <h3>CNOT (Controlled-NOT)</h3>
+            <div class="formula">
+                CNOT = |0⟩⟨0| ⊗ I + |1⟩⟨1| ⊗ X
+            </div>
+            <p>Action:</p>
+            <ul>
+                <li>|00⟩ → |00⟩ (control=0, target unchanged)</li>
+                <li>|01⟩ → |01⟩ (control=0, target unchanged)</li>
+                <li>|10⟩ → |11⟩ (control=1, target flipped)</li>
+                <li>|11⟩ → |10⟩ (control=1, target flipped)</li>
+            </ul>
+            
+            <h3>CZ (Controlled-Z)</h3>
+            <div class="formula">
+                CZ = |0⟩⟨0| ⊗ I + |1⟩⟨1| ⊗ Z
+            </div>
+            <p>Applies Z gate to target if control is |1⟩</p>
+            
+            <h3>SWAP Gate</h3>
+            <div class="formula">
+                SWAP|ψ₁⟩|ψ₂⟩ = |ψ₂⟩|ψ₁⟩
+            </div>
+            <p>Exchanges the states of two qubits</p>
+            
+            <h3>Toffoli (CCNOT)</h3>
+            <p>Three-qubit gate: Flips target if both controls are |1⟩</p>
+            <div class="formula">
+                |a⟩|b⟩|c⟩ → |a⟩|b⟩|c ⊕ (a·b)⟩
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Computational Basis States</h2>
+            <p>For n qubits, there are 2ⁿ computational basis states:</p>
+            
+            <h3>Two Qubits (4 states)</h3>
+            <div class="formula">
+                |00⟩ = [1, 0, 0, 0]ᵀ<br>
+                |01⟩ = [0, 1, 0, 0]ᵀ<br>
+                |10⟩ = [0, 0, 1, 0]ᵀ<br>
+                |11⟩ = [0, 0, 0, 1]ᵀ
+            </div>
+            
+            <h3>Three Qubits (8 states)</h3>
+            <div class="formula">
+                |000⟩, |001⟩, |010⟩, |011⟩,<br>
+                |100⟩, |101⟩, |110⟩, |111⟩
+            </div>
+            
+            <p>Each corresponds to a binary number from 0 to 2ⁿ-1</p>
+        </div>
+
+        <div class="section">
+            <h2>Quantum Parallelism</h2>
+            <p>Multi-qubit systems enable <span class="highlight">quantum parallelism</span>:</p>
+            
+            <div class="example">
+                <h3>Example: Function Evaluation</h3>
+                <p>Classical: Evaluate f(x) for one input at a time</p>
+                <p>Quantum: Create superposition of all inputs!</p>
+                
+                <div class="formula">
+                    H⊗ⁿ|0⟩⊗ⁿ = (1/√2ⁿ) Σₓ |x⟩
+                </div>
+                
+                <p>Apply function: Uf|x⟩|0⟩ → |x⟩|f(x)⟩</p>
+                <p>Result: All 2ⁿ function values computed simultaneously!</p>
+            </div>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>Quantum parallelism doesn't directly give us all answers - we can only extract limited information through measurement. The power comes from interference patterns that amplify correct answers.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Measurement of Multi-Qubit Systems</h2>
+            <p>Measuring multi-qubit systems collapses the entire state:</p>
+            
+            <h3>Full Measurement</h3>
+            <p>Measure all qubits simultaneously:</p>
+            <div class="formula">
+                |ψ⟩ = Σᵢ cᵢ|i⟩ → |k⟩ with probability |cₖ|²
+            </div>
+            
+            <h3>Partial Measurement</h3>
+            <p>Measure only some qubits:</p>
+            <ul>
+                <li>Measured qubits collapse to definite values</li>
+                <li>Unmeasured qubits remain in superposition</li>
+                <li>State of unmeasured qubits depends on measurement outcome</li>
+            </ul>
+            
+            <div class="example">
+                <h3>Example: Partial Measurement</h3>
+                <p>State: |ψ⟩ = (|00⟩ + |11⟩)/√2</p>
+                <p>Measure first qubit:</p>
+                <ul>
+                    <li>If outcome = 0: Second qubit is |0⟩</li>
+                    <li>If outcome = 1: Second qubit is |1⟩</li>
+                </ul>
+                <p>The qubits are correlated!</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Scaling Challenges</h2>
+            <p>As we add more qubits, several challenges emerge:</p>
+            
+            <h3>State Space Growth</h3>
+            <ul>
+                <li><strong>10 qubits:</strong> 1,024 dimensions</li>
+                <li><strong>20 qubits:</strong> 1,048,576 dimensions</li>
+                <li><strong>50 qubits:</strong> 1,125,899,906,842,624 dimensions</li>
+                <li><strong>300 qubits:</strong> More dimensions than atoms in universe!</li>
+            </ul>
+            
+            <h3>Decoherence</h3>
+            <p>More qubits → More interactions with environment → Faster decoherence</p>
+            
+            <h3>Gate Errors</h3>
+            <p>Errors accumulate with circuit depth and qubit count</p>
+            
+            <h3>Connectivity</h3>
+            <p>Not all qubits can directly interact - requires SWAP gates</p>
+        </div>
+
+        <div class="section">
+            <h2>Classical Simulation Limits</h2>
+            <p>Simulating quantum systems on classical computers becomes intractable:</p>
+            
+            <h3>Memory Requirements</h3>
+            <div class="formula">
+                n qubits → 2ⁿ complex amplitudes → 2ⁿ⁺⁴ bytes
+            </div>
+            
+            <ul>
+                <li><strong>30 qubits:</strong> ~17 GB</li>
+                <li><strong>40 qubits:</strong> ~17 TB</li>
+                <li><strong>50 qubits:</strong> ~18 PB</li>
+            </ul>
+            
+            <h3>Computational Time</h3>
+            <p>Each gate operation requires updating 2ⁿ amplitudes</p>
+            <p>Deep circuits on many qubits → Exponential classical time</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>Around 50-100 qubits, quantum computers can perform tasks that are practically impossible for classical computers. This is the threshold for "quantum advantage".</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Multi-Qubit Applications</h2>
+            <p>Multi-qubit systems enable powerful quantum algorithms:</p>
+            
+            <ul>
+                <li><strong>Shor's Algorithm:</strong> Factor large numbers (requires ~2n qubits for n-bit number)</li>
+                <li><strong>Grover's Algorithm:</strong> Search unsorted database (√N speedup)</li>
+                <li><strong>Quantum Simulation:</strong> Simulate quantum systems efficiently</li>
+                <li><strong>Quantum Machine Learning:</strong> Process high-dimensional data</li>
+                <li><strong>Quantum Optimization:</strong> Solve combinatorial problems</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>Multi-qubit systems are the foundation of quantum computing:</p>
+            <ul>
+                <li>State space grows exponentially: 2ⁿ dimensions for n qubits</li>
+                <li>Tensor product structure combines individual qubits</li>
+                <li>Two-qubit gates (CNOT, CZ, SWAP) create correlations</li>
+                <li>Quantum parallelism enables simultaneous computation</li>
+                <li>Measurement can be full or partial</li>
+                <li>Classical simulation becomes intractable around 50 qubits</li>
+                <li>Enables powerful quantum algorithms and applications</li>
+            </ul>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="../09-single-qubit/index.html" class="btn btn-secondary">← Previous: Single Qubit</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../11-entangled-qubits/index.html" class="btn btn-primary">Next: Entangled Qubits →</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let qubitSpheres = [];
+        let connectionLines = [];
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(5, 5, 5);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0x64ffda, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            // Show initial system
+            showTwoQubit();
+            
+            animate();
+            
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function clearScene() {
+            qubitSpheres.forEach(sphere => {
+                scene.remove(sphere);
+                if (sphere.geometry) sphere.geometry.dispose();
+                if (sphere.material) sphere.material.dispose();
+            });
+            qubitSpheres = [];
+            
+            connectionLines.forEach(line => {
+                scene.remove(line);
+                if (line.geometry) line.geometry.dispose();
+                if (line.material) line.material.dispose();
+            });
+            connectionLines = [];
+        }
+        
+        function createQubit(position, color) {
+            const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: color,
+                emissive: color,
+                emissiveIntensity: 0.3
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.copy(position);
+            scene.add(sphere);
+            qubitSpheres.push(sphere);
+            return sphere;
+        }
+        
+        function createConnection(pos1, pos2) {
+            const geometry = new THREE.BufferGeometry().setFromPoints([pos1, pos2]);
+            const material = new THREE.LineBasicMaterial({ color: 0x64ffda, linewidth: 2 });
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            connectionLines.push(line);
+        }
+        
+        function showTwoQubit() {
+            clearScene();
+            
+            const pos1 = new THREE.Vector3(-2, 0, 0);
+            const pos2 = new THREE.Vector3(2, 0, 0);
+            
+            createQubit(pos1, 0xff6b6b);
+            createQubit(pos2, 0x4ecdc4);
+            createConnection(pos1, pos2);
+            
+            document.getElementById('state-info').textContent = 
+                '2-qubit system: 4-dimensional Hilbert space\nBasis: |00⟩, |01⟩, |10⟩, |11⟩';
+        }
+        
+        function showThreeQubit() {
+            clearScene();
+            
+            const pos1 = new THREE.Vector3(-3, 0, 0);
+            const pos2 = new THREE.Vector3(0, 0, 0);
+            const pos3 = new THREE.Vector3(3, 0, 0);
+            
+            createQubit(pos1, 0xff6b6b);
+            createQubit(pos2, 0x4ecdc4);
+            createQubit(pos3, 0xffd93d);
+            
+            createConnection(pos1, pos2);
+            createConnection(pos2, pos3);
+            
+            document.getElementById('state-info').textContent = 
+                '3-qubit system: 8-dimensional Hilbert space\nBasis: |000⟩ through |111⟩';
+        }
+        
+        function showCNOT() {
+            clearScene();
+            
+            const pos1 = new THREE.Vector3(-2, 1, 0);
+            const pos2 = new THREE.Vector3(2, -1, 0);
+            
+            const control = createQubit(pos1, 0xff6b6b);
+            const target = createQubit(pos2, 0x4ecdc4);
+            
+            // Draw control line
+            const geometry = new THREE.BufferGeometry().setFromPoints([pos1, pos2]);
+            const material = new THREE.LineDashedMaterial({ 
+                color: 0xffff00, 
+                linewidth: 2,
+                dashSize: 0.3,
+                gapSize: 0.1
+            });
+            const line = new THREE.Line(geometry, material);
+            line.computeLineDistances();
+            scene.add(line);
+            connectionLines.push(line);
+            
+            // Add control indicator
+            const controlGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const controlMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+            const controlIndicator = new THREE.Mesh(controlGeometry, controlMaterial);
+            controlIndicator.position.copy(pos1);
+            scene.add(controlIndicator);
+            qubitSpheres.push(controlIndicator);
+            
+            document.getElementById('state-info').textContent = 
+                'CNOT Gate: Control qubit determines if target is flipped\n|00⟩→|00⟩, |01⟩→|01⟩, |10⟩→|11⟩, |11⟩→|10⟩';
+        }
+        
+        function showBellState() {
+            clearScene();
+            
+            const pos1 = new THREE.Vector3(-2, 0, 0);
+            const pos2 = new THREE.Vector3(2, 0, 0);
+            
+            createQubit(pos1, 0xff6b6b);
+            createQubit(pos2, 0x4ecdc4);
+            
+            // Draw entanglement connection
+            const curve = new THREE.QuadraticBezierCurve3(
+                pos1,
+                new THREE.Vector3(0, 2, 0),
+                pos2
+            );
+            const points = curve.getPoints(50);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({ color: 0xffff00, linewidth: 3 });
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            connectionLines.push(line);
+            
+            document.getElementById('state-info').textContent = 
+                'Bell State: |Φ⁺⟩ = (|00⟩ + |11⟩)/√2\nMaximally entangled state!';
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate qubits
+            qubitSpheres.forEach((sphere, index) => {
+                sphere.rotation.y += 0.01;
+                sphere.rotation.x += 0.005;
+            });
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

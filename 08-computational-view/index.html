@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational View of Qubits - Interactive 3D Visualization</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .gate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .gate-card {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 3px solid #64ffda;
+        }
+        
+        .gate-card h3 {
+            color: #64ffda;
+            margin-top: 0;
+        }
+        
+        .control-panel {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            margin: 15px 0;
+        }
+        
+        .control-group button {
+            background: #64ffda;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .control-group button:hover {
+            background: #52d4c2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+        }
+        
+        .circuit-display {
+            background: rgba(100, 255, 218, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 3px solid #64ffda;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Concept 8: Computational View of Qubits</h1>
+        
+        <div class="section">
+            <h2>Interactive 3D Visualization</h2>
+            <p>Explore quantum gates and their effects on qubit states. The visualization shows how quantum gates transform qubit states on the Bloch sphere.</p>
+            <div id="canvas-container"></div>
+            
+            <div class="control-panel">
+                <div class="control-group">
+                    <button onclick="applyGate('X')">X Gate</button>
+                    <button onclick="applyGate('Y')">Y Gate</button>
+                    <button onclick="applyGate('Z')">Z Gate</button>
+                    <button onclick="applyGate('H')">H Gate</button>
+                    <button onclick="applyGate('S')">S Gate</button>
+                    <button onclick="applyGate('T')">T Gate</button>
+                    <button onclick="resetState()">Reset</button>
+                </div>
+                
+                <div class="circuit-display">
+                    <h3>Current Circuit:</h3>
+                    <p id="circuit-text">|ψ⟩ = |0⟩</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Computational Model of Quantum Computing</h2>
+            <p>In the computational view, qubits are manipulated using <span class="highlight">quantum gates</span> - unitary operations that transform qubit states. This is analogous to classical logic gates but with quantum properties.</p>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>Quantum computation is performed by applying sequences of quantum gates to qubits. Unlike classical gates, quantum gates are reversible and can create superposition and entanglement.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Single-Qubit Quantum Gates</h2>
+            
+            <div class="gate-grid">
+                <div class="gate-card">
+                    <h3>Pauli-X Gate (NOT)</h3>
+                    <div class="formula">
+                        X = [0 1]
+                            [1 0]
+                    </div>
+                    <p><strong>Effect:</strong> Flips |0⟩ ↔ |1⟩</p>
+                    <p><strong>Bloch sphere:</strong> 180° rotation around X-axis</p>
+                    <p><strong>Classical analog:</strong> NOT gate</p>
+                    <div class="formula">
+                        X|0⟩ = |1⟩<br>
+                        X|1⟩ = |0⟩
+                    </div>
+                </div>
+                
+                <div class="gate-card">
+                    <h3>Pauli-Y Gate</h3>
+                    <div class="formula">
+                        Y = [0 -i]
+                            [i  0]
+                    </div>
+                    <p><strong>Effect:</strong> Flips with phase</p>
+                    <p><strong>Bloch sphere:</strong> 180° rotation around Y-axis</p>
+                    <p><strong>Properties:</strong> Y = iXZ</p>
+                    <div class="formula">
+                        Y|0⟩ = i|1⟩<br>
+                        Y|1⟩ = -i|0⟩
+                    </div>
+                </div>
+                
+                <div class="gate-card">
+                    <h3>Pauli-Z Gate</h3>
+                    <div class="formula">
+                        Z = [1  0]
+                            [0 -1]
+                    </div>
+                    <p><strong>Effect:</strong> Phase flip</p>
+                    <p><strong>Bloch sphere:</strong> 180° rotation around Z-axis</p>
+                    <p><strong>Properties:</strong> Leaves |0⟩ unchanged, flips sign of |1⟩</p>
+                    <div class="formula">
+                        Z|0⟩ = |0⟩<br>
+                        Z|1⟩ = -|1⟩
+                    </div>
+                </div>
+                
+                <div class="gate-card">
+                    <h3>Hadamard Gate</h3>
+                    <div class="formula">
+                        H = (1/√2)[1  1]
+                                  [1 -1]
+                    </div>
+                    <p><strong>Effect:</strong> Creates superposition</p>
+                    <p><strong>Bloch sphere:</strong> 90° around X, then 180° around Y</p>
+                    <p><strong>Properties:</strong> H² = I (self-inverse)</p>
+                    <div class="formula">
+                        H|0⟩ = |+⟩ = (|0⟩+|1⟩)/√2<br>
+                        H|1⟩ = |−⟩ = (|0⟩−|1⟩)/√2
+                    </div>
+                </div>
+                
+                <div class="gate-card">
+                    <h3>Phase Gate (S)</h3>
+                    <div class="formula">
+                        S = [1 0]
+                            [0 i]
+                    </div>
+                    <p><strong>Effect:</strong> Adds π/2 phase</p>
+                    <p><strong>Bloch sphere:</strong> 90° rotation around Z-axis</p>
+                    <p><strong>Properties:</strong> S² = Z</p>
+                    <div class="formula">
+                        S|0⟩ = |0⟩<br>
+                        S|1⟩ = i|1⟩
+                    </div>
+                </div>
+                
+                <div class="gate-card">
+                    <h3>T Gate (π/8)</h3>
+                    <div class="formula">
+                        T = [1    0   ]
+                            [0 e^(iπ/4)]
+                    </div>
+                    <p><strong>Effect:</strong> Adds π/4 phase</p>
+                    <p><strong>Bloch sphere:</strong> 45° rotation around Z-axis</p>
+                    <p><strong>Properties:</strong> T² = S, T⁴ = Z</p>
+                    <div class="formula">
+                        T|0⟩ = |0⟩<br>
+                        T|1⟩ = e^(iπ/4)|1⟩
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Universal Gate Sets</h2>
+            <p>A set of gates is <span class="highlight">universal</span> if any quantum computation can be approximated to arbitrary precision using only gates from that set.</p>
+            
+            <h3>Common Universal Sets</h3>
+            <ul>
+                <li><strong>{H, T, CNOT}:</strong> Clifford + T gate set (most common)</li>
+                <li><strong>{H, S, T, CNOT}:</strong> Extended Clifford set</li>
+                <li><strong>{Rx, Ry, Rz, CNOT}:</strong> Continuous rotation gates</li>
+                <li><strong>{U3, CNOT}:</strong> Arbitrary single-qubit + CNOT</li>
+            </ul>
+            
+            <div class="key-point">
+                <h3>🔑 Key Insight</h3>
+                <p>The Solovay-Kitaev theorem guarantees that any single-qubit gate can be approximated to precision ε using O(log^c(1/ε)) gates from a universal set, where c ≈ 2.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Gate Properties</h2>
+            
+            <h3>Unitarity</h3>
+            <p>All quantum gates must be <span class="highlight">unitary</span>: U†U = UU† = I</p>
+            <p>This ensures:</p>
+            <ul>
+                <li>Reversibility: Every gate has an inverse</li>
+                <li>Norm preservation: ||U|ψ⟩|| = ||ψ⟩||</li>
+                <li>Probability conservation: Total probability remains 1</li>
+            </ul>
+            
+            <h3>Hermiticity</h3>
+            <p>Pauli gates (X, Y, Z) are <span class="highlight">Hermitian</span>: X† = X</p>
+            <p>This means:</p>
+            <ul>
+                <li>They are their own inverse: X² = Y² = Z² = I</li>
+                <li>They have real eigenvalues: ±1</li>
+                <li>They can be used as observables for measurement</li>
+            </ul>
+            
+            <h3>Commutativity</h3>
+            <p>Some gates commute, others don't:</p>
+            <div class="formula">
+                [X, Y] = XY - YX = 2iZ ≠ 0 (don't commute)<br>
+                [X, Z] = 2iY ≠ 0<br>
+                [Y, Z] = 2iX ≠ 0
+            </div>
+            <p>But rotations around the same axis commute:</p>
+            <div class="formula">
+                [Rz(θ₁), Rz(θ₂)] = 0
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Quantum Circuits</h2>
+            <p>Quantum algorithms are represented as <span class="highlight">quantum circuits</span> - sequences of gates applied to qubits.</p>
+            
+            <h3>Circuit Notation</h3>
+            <ul>
+                <li><strong>Horizontal lines:</strong> Represent qubits (time flows left to right)</li>
+                <li><strong>Boxes:</strong> Represent single-qubit gates</li>
+                <li><strong>Vertical lines with dots:</strong> Represent multi-qubit gates</li>
+                <li><strong>Measurement:</strong> Shown with meter symbol</li>
+            </ul>
+            
+            <div class="example">
+                <h3>Example: Bell State Preparation</h3>
+                <div class="formula">
+                    |ψ⟩ = (|00⟩ + |11⟩)/√2
+                </div>
+                <p>Circuit:</p>
+                <pre>
+q₀: ─H─●─
+        │
+q₁: ───X─
+                </pre>
+                <p>Steps:</p>
+                <ol>
+                    <li>Apply H gate to q₀: Creates superposition (|0⟩+|1⟩)/√2</li>
+                    <li>Apply CNOT with q₀ as control, q₁ as target</li>
+                    <li>Result: Entangled Bell state</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Gate Decomposition</h2>
+            <p>Complex gates can be decomposed into sequences of simpler gates.</p>
+            
+            <h3>Arbitrary Single-Qubit Gate</h3>
+            <p>Any single-qubit gate can be written as:</p>
+            <div class="formula">
+                U = e^(iα) Rz(β) Ry(γ) Rz(δ)
+            </div>
+            <p>Or equivalently:</p>
+            <div class="formula">
+                U = e^(iα) Rz(φ) Rx(θ) Rz(λ)
+            </div>
+            
+            <h3>Common Decompositions</h3>
+            <ul>
+                <li><strong>H = (X + Z)/√2:</strong> Hadamard from Pauli gates</li>
+                <li><strong>S = T²:</strong> Phase gate from T gates</li>
+                <li><strong>Y = iXZ:</strong> Y from X and Z</li>
+                <li><strong>CNOT = (I ⊗ H)(CZ)(I ⊗ H):</strong> CNOT from CZ and H</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Computational Complexity</h2>
+            <p>Quantum circuits have different complexity measures than classical circuits:</p>
+            
+            <h3>Circuit Depth</h3>
+            <p>The number of sequential gate layers (critical for decoherence)</p>
+            <ul>
+                <li>Shallow circuits: Better for NISQ devices</li>
+                <li>Deep circuits: Required for complex algorithms</li>
+            </ul>
+            
+            <h3>Gate Count</h3>
+            <p>Total number of gates (affects error accumulation)</p>
+            <ul>
+                <li>Single-qubit gates: Typically high fidelity (>99.9%)</li>
+                <li>Two-qubit gates: Lower fidelity (~99%), more expensive</li>
+            </ul>
+            
+            <h3>Qubit Count</h3>
+            <p>Number of qubits required (limits current implementations)</p>
+            <ul>
+                <li>Logical qubits: What the algorithm needs</li>
+                <li>Physical qubits: What's actually implemented (with error correction)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Quantum Advantage</h2>
+            <p>The computational view reveals why quantum computers can outperform classical computers:</p>
+            
+            <ol>
+                <li><strong>Superposition:</strong> Process multiple inputs simultaneously</li>
+                <li><strong>Interference:</strong> Amplify correct answers, cancel wrong ones</li>
+                <li><strong>Entanglement:</strong> Create correlations impossible classically</li>
+                <li><strong>Exponential state space:</strong> n qubits represent 2ⁿ amplitudes</li>
+            </ol>
+            
+            <div class="example">
+                <h3>Example: Quantum Parallelism</h3>
+                <p>Classical: Evaluate f(x) for one input at a time</p>
+                <p>Quantum: Apply Uf to superposition, evaluate all inputs at once!</p>
+                <div class="formula">
+                    H^⊗n|0⟩^⊗n = (1/√2^n) Σ|x⟩<br>
+                    Uf: |x⟩|0⟩ → |x⟩|f(x)⟩<br>
+                    Result: All f(x) computed in parallel
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Summary</h2>
+            <p>The computational view of qubits focuses on:</p>
+            <ul>
+                <li>Quantum gates as unitary transformations of qubit states</li>
+                <li>Universal gate sets that can approximate any quantum computation</li>
+                <li>Quantum circuits as sequences of gates applied to qubits</li>
+                <li>Gate properties: unitarity, reversibility, and composition</li>
+                <li>Computational advantages from superposition and entanglement</li>
+            </ul>
+            
+            <p>This computational model provides the foundation for quantum algorithm design and implementation.</p>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="../07-physical-view/index.html" class="btn btn-secondary">← Previous: Physical View</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../09-single-qubit/index.html" class="btn btn-primary">Next: Single Qubit →</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let blochSphere, stateVector, trajectory;
+        let currentState = [1, 0]; // |0⟩
+        let gateSequence = [];
+        let trajectoryPoints = [];
+
+        function init() {
+            const container = document.getElementById('canvas-container');
+            
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(3, 3, 3);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0x64ffda, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+            
+            // Create Bloch sphere
+            createBlochSphere();
+            
+            // Create state vector
+            updateStateVector();
+            
+            // Add axes
+            const axesHelper = new THREE.AxesHelper(2);
+            scene.add(axesHelper);
+            
+            // Add axis labels
+            addAxisLabels();
+            
+            animate();
+            
+            window.addEventListener('resize', onWindowResize, false);
+        }
+        
+        function createBlochSphere() {
+            // Wireframe sphere
+            const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+            const sphereMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x64ffda, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+            blochSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            scene.add(blochSphere);
+            
+            // Equator
+            const equatorGeometry = new THREE.BufferGeometry();
+            const equatorPoints = [];
+            for (let i = 0; i <= 64; i++) {
+                const angle = (i / 64) * Math.PI * 2;
+                equatorPoints.push(new THREE.Vector3(Math.cos(angle), 0, Math.sin(angle)));
+            }
+            equatorGeometry.setFromPoints(equatorPoints);
+            const equatorMaterial = new THREE.LineBasicMaterial({ color: 0x64ffda, opacity: 0.5, transparent: true });
+            const equator = new THREE.Line(equatorGeometry, equatorMaterial);
+            scene.add(equator);
+        }
+        
+        function addAxisLabels() {
+            // X axis
+            const xGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+            const xMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+            const xLabel = new THREE.Mesh(xGeometry, xMaterial);
+            xLabel.position.set(1.3, 0, 0);
+            scene.add(xLabel);
+            
+            // Y axis
+            const yMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            const yLabel = new THREE.Mesh(xGeometry.clone(), yMaterial);
+            yLabel.position.set(0, 1.3, 0);
+            scene.add(yLabel);
+            
+            // Z axis
+            const zMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+            const zLabel = new THREE.Mesh(xGeometry.clone(), zMaterial);
+            zLabel.position.set(0, 0, 1.3);
+            scene.add(zLabel);
+        }
+        
+        function updateStateVector() {
+            // Remove old vector
+            if (stateVector) {
+                scene.remove(stateVector);
+            }
+            
+            // Calculate Bloch sphere coordinates
+            const alpha = currentState[0];
+            const beta = currentState[1];
+            
+            // |ψ⟩ = α|0⟩ + β|1⟩
+            // Bloch: θ = 2*arccos(|α|), φ = arg(β) - arg(α)
+            const theta = 2 * Math.acos(Math.abs(alpha));
+            const phi = Math.atan2(beta.imag || 0, beta.real || beta) - Math.atan2(alpha.imag || 0, alpha.real || alpha);
+            
+            const x = Math.sin(theta) * Math.cos(phi);
+            const y = Math.cos(theta);
+            const z = Math.sin(theta) * Math.sin(phi);
+            
+            // Create arrow
+            const direction = new THREE.Vector3(x, y, z);
+            const origin = new THREE.Vector3(0, 0, 0);
+            const length = 1;
+            const hex = 0xffff00;
+            
+            stateVector = new THREE.ArrowHelper(direction, origin, length, hex, 0.2, 0.1);
+            scene.add(stateVector);
+            
+            // Add to trajectory
+            trajectoryPoints.push(new THREE.Vector3(x, y, z));
+            if (trajectoryPoints.length > 50) {
+                trajectoryPoints.shift();
+            }
+            
+            // Update trajectory line
+            if (trajectory) {
+                scene.remove(trajectory);
+            }
+            if (trajectoryPoints.length > 1) {
+                const trajectoryGeometry = new THREE.BufferGeometry().setFromPoints(trajectoryPoints);
+                const trajectoryMaterial = new THREE.LineBasicMaterial({ color: 0xff00ff, linewidth: 2 });
+                trajectory = new THREE.Line(trajectoryGeometry, trajectoryMaterial);
+                scene.add(trajectory);
+            }
+        }
+        
+        function applyGate(gateName) {
+            gateSequence.push(gateName);
+            
+            const alpha = currentState[0];
+            const beta = currentState[1];
+            
+            switch(gateName) {
+                case 'X':
+                    currentState = [beta, alpha];
+                    break;
+                case 'Y':
+                    currentState = [-beta, alpha];
+                    break;
+                case 'Z':
+                    currentState = [alpha, -beta];
+                    break;
+                case 'H':
+                    currentState = [(alpha + beta) / Math.sqrt(2), (alpha - beta) / Math.sqrt(2)];
+                    break;
+                case 'S':
+                    currentState = [alpha, beta]; // Simplified (phase not shown)
+                    break;
+                case 'T':
+                    currentState = [alpha, beta]; // Simplified (phase not shown)
+                    break;
+            }
+            
+            updateStateVector();
+            updateCircuitDisplay();
+        }
+        
+        function resetState() {
+            currentState = [1, 0];
+            gateSequence = [];
+            trajectoryPoints = [];
+            updateStateVector();
+            updateCircuitDisplay();
+        }
+        
+        function updateCircuitDisplay() {
+            const circuitText = document.getElementById('circuit-text');
+            if (gateSequence.length === 0) {
+                circuitText.textContent = '|ψ⟩ = |0⟩';
+            } else {
+                circuitText.textContent = '|ψ⟩ = ' + gateSequence.join(' → ') + ' |0⟩';
+            }
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate sphere slowly
+            if (blochSphere) {
+                blochSphere.rotation.y += 0.002;
+            }
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        init();
+    </script>
+</body>
+</html>
