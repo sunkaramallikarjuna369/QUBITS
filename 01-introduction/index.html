@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduction to Qubits - Quantum Information</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #0a0a0a;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚛️ Introduction to Qubits</h1>
+            <p class="subtitle">Fundamental Unit of Quantum Information</p>
+        </header>
+
+        <section class="section">
+            <h2>What is a Qubit?</h2>
+            <p>
+                A <strong>qubit</strong> (quantum bit) is the fundamental unit of quantum information, analogous to 
+                the classical bit in conventional computing. The term "qubit" combines "quantum" and "bit", 
+                representing a 2-level quantum system that exhibits quantum mechanical properties.
+            </p>
+            
+            <div id="canvas-container"></div>
+            
+            <div class="key-point">
+                <h3>Key Definition</h3>
+                <p>
+                    A qubit represents unit quantum information. It is a quantum mechanical two-level system 
+                    that can exist in superposition states, enabling quantum parallelism and quantum computation.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Quantum Properties</h2>
+            <p>
+                Qubits possess unique quantum mechanical properties that distinguish them from classical bits:
+            </p>
+            
+            <div class="highlight">
+                <h3>1. Superposition</h3>
+                <p>
+                    Unlike classical bits that exist in either 0 or 1 state, qubits can exist in a 
+                    <strong>superposition</strong> of both states simultaneously. This is mathematically 
+                    represented as:
+                </p>
+                <div class="formula">
+                    |ψ⟩ = α|0⟩ + β|1⟩
+                </div>
+                <p>
+                    where α and β are complex probability amplitudes satisfying |α|² + |β|² = 1.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <h3>2. Entanglement</h3>
+                <p>
+                    Qubits can be <strong>entangled</strong> with each other, creating correlations that 
+                    have no classical analog. When qubits are entangled, the state of one qubit cannot be 
+                    described independently of the others.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <h3>3. Measurement</h3>
+                <p>
+                    When a qubit is measured, it <strong>collapses</strong> from its superposition state 
+                    to one of the basis states (|0⟩ or |1⟩) with probabilities |α|² and |β|² respectively.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <h3>4. Intrinsic Parallelism</h3>
+                <p>
+                    Due to superposition, qubits exhibit <strong>intrinsic parallelism</strong>, allowing 
+                    quantum computers to process multiple computational paths simultaneously.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Course Overview</h2>
+            <p>
+                This course explores qubits from multiple perspectives to build comprehensive understanding:
+            </p>
+            
+            <div class="example">
+                <h3>Theme 1: Bit-Qubit Relationship</h3>
+                <ul>
+                    <li><strong>Bit vs Qubit:</strong> Comparing classical and quantum information units</li>
+                    <li><strong>Qubit from Bit:</strong> Transitioning from classical to quantum</li>
+                    <li><strong>Bit from Qubit:</strong> Measurement and classical information extraction</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <h3>Theme 2: Three Views of Qubits</h3>
+                <ul>
+                    <li><strong>Mathematical View:</strong> Formal mathematical description using linear algebra</li>
+                    <li><strong>Physical View:</strong> Physical implementations and quantum systems</li>
+                    <li><strong>Computational View:</strong> Qubits in quantum algorithms and computation</li>
+                </ul>
+            </div>
+
+            <div class="example">
+                <h3>Theme 3: Qubit Systems</h3>
+                <ul>
+                    <li><strong>Single Qubit:</strong> Operations and transformations on individual qubits</li>
+                    <li><strong>Multi-Qubits:</strong> Multiple qubit systems and tensor products</li>
+                    <li><strong>Entangled Qubits:</strong> Quantum entanglement and Bell states</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Mathematical Prerequisites</h2>
+            <p>
+                Understanding qubits requires familiarity with several mathematical concepts:
+            </p>
+            
+            <div class="code-block">
+                <h3>Complex Numbers</h3>
+                <p>
+                    Quantum states are described using complex numbers. A complex number z = a + bi 
+                    has a real part (a) and imaginary part (b), where i² = -1.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>Vectors and Linear Algebra</h3>
+                <p>
+                    Qubits are represented as vectors in a complex vector space. Key operations include:
+                </p>
+                <ul>
+                    <li>Addition and scalar multiplication</li>
+                    <li>Inner products and norms</li>
+                    <li>Projections and transformations</li>
+                    <li>Eigenvalues and eigenvectors</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Bloch Sphere Representation</h2>
+            <p>
+                The <strong>Bloch sphere</strong> provides a geometric representation of single qubit states. 
+                Any pure qubit state can be represented as a point on the surface of a unit sphere:
+            </p>
+            
+            <div class="formula">
+                |ψ⟩ = cos(θ/2)|0⟩ + e^(iφ) sin(θ/2)|1⟩
+            </div>
+            
+            <p>
+                where θ is the polar angle (0 ≤ θ ≤ π) and φ is the azimuthal angle (0 ≤ φ < 2π).
+            </p>
+            
+            <div class="key-point">
+                <h3>Bloch Sphere Properties</h3>
+                <ul>
+                    <li>North pole (θ=0): |0⟩ state</li>
+                    <li>South pole (θ=π): |1⟩ state</li>
+                    <li>Equator: Superposition states with equal amplitudes</li>
+                    <li>Antipodal points: Orthogonal states</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Core Concepts to Learn</h2>
+            <p>
+                The quantum computing journey involves mastering several interconnected concepts:
+            </p>
+            
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h3>Qubits</h3>
+                    <p>Fundamental quantum information units</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Operators</h3>
+                    <p>Quantum gates and transformations</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Evolution</h3>
+                    <p>Time evolution of quantum states</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Circuits</h3>
+                    <p>Quantum circuit design and implementation</p>
+                </div>
+                <div class="concept-card">
+                    <h3>Algorithms</h3>
+                    <p>Quantum algorithms and applications</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Why Qubits Matter</h2>
+            <p>
+                Qubits enable quantum computers to solve certain problems exponentially faster than 
+                classical computers:
+            </p>
+            
+            <div class="example">
+                <h3>Applications</h3>
+                <ul>
+                    <li><strong>Cryptography:</strong> Quantum key distribution and secure communication</li>
+                    <li><strong>Optimization:</strong> Solving complex optimization problems</li>
+                    <li><strong>Simulation:</strong> Simulating quantum systems and molecules</li>
+                    <li><strong>Machine Learning:</strong> Quantum machine learning algorithms</li>
+                    <li><strong>Search:</strong> Quantum search algorithms (Grover's algorithm)</li>
+                    <li><strong>Factorization:</strong> Integer factorization (Shor's algorithm)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Caution Note</h2>
+            <div class="highlight">
+                <p>
+                    <strong>Important:</strong> Visual representations and cartoons are used to develop 
+                    intuitive understanding of quantum concepts. While helpful for learning, these 
+                    visualizations should not be taken as scientifically accurate representations of 
+                    quantum phenomena. The true behavior of quantum systems is described by the 
+                    mathematical formalism of quantum mechanics.
+                </p>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../index.html" class="btn">← Home</a>
+            <a href="../02-complex-numbers/index.html" class="btn btn-primary">Next: Complex Numbers →</a>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+        
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(4, 3, 4);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+        
+        // Create classical bit representation (left)
+        const bitGroup = new THREE.Group();
+        
+        // Bit 0 state
+        const bit0Geometry = new THREE.SphereGeometry(0.3, 32, 32);
+        const bit0Material = new THREE.MeshPhongMaterial({ color: 0xff6b6b });
+        const bit0 = new THREE.Mesh(bit0Geometry, bit0Material);
+        bit0.position.set(-3, 1, 0);
+        bitGroup.add(bit0);
+        
+        // Bit 1 state
+        const bit1Geometry = new THREE.SphereGeometry(0.3, 32, 32);
+        const bit1Material = new THREE.MeshPhongMaterial({ color: 0x4ecdc4 });
+        const bit1 = new THREE.Mesh(bit1Geometry, bit1Material);
+        bit1.position.set(-3, -1, 0);
+        bitGroup.add(bit1);
+        
+        // Connection line
+        const lineGeometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(-3, 1, 0),
+            new THREE.Vector3(-3, -1, 0)
+        ]);
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x666666 });
+        const line = new THREE.Line(lineGeometry, lineMaterial);
+        bitGroup.add(line);
+        
+        scene.add(bitGroup);
+        
+        // Create qubit representation (right) - Bloch sphere
+        const qubitGroup = new THREE.Group();
+        qubitGroup.position.set(3, 0, 0);
+        
+        // Bloch sphere
+        const sphereGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+        const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: 0x64ffda,
+            transparent: true,
+            opacity: 0.2
+        });
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        qubitGroup.add(sphere);
+        
+        // Wireframe
+        const wireframeGeometry = new THREE.SphereGeometry(1.5, 16, 16);
+        const wireframeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x64ffda,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const wireframe = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+        qubitGroup.add(wireframe);
+        
+        // Axes
+        const axesHelper = new THREE.AxesHelper(2);
+        qubitGroup.add(axesHelper);
+        
+        // State vector
+        const arrowDir = new THREE.Vector3(1, 1, 1).normalize();
+        const arrowOrigin = new THREE.Vector3(0, 0, 0);
+        const arrow = new THREE.ArrowHelper(arrowDir, arrowOrigin, 1.5, 0xff6b6b, 0.3, 0.2);
+        qubitGroup.add(arrow);
+        
+        scene.add(qubitGroup);
+        
+        // Add labels
+        const loader = new THREE.FontLoader();
+        
+        // Animation
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Animate classical bit (toggle between states)
+            const bitState = Math.sin(time) > 0 ? 1 : 0;
+            bit0.material.emissive = new THREE.Color(bitState === 0 ? 0xff6b6b : 0x000000);
+            bit1.material.emissive = new THREE.Color(bitState === 1 ? 0x4ecdc4 : 0x000000);
+            
+            // Animate qubit state vector
+            const theta = Math.PI / 3;
+            const phi = time;
+            const x = Math.sin(theta) * Math.cos(phi);
+            const y = Math.sin(theta) * Math.sin(phi);
+            const z = Math.cos(theta);
+            
+            const newDir = new THREE.Vector3(x, y, z).normalize();
+            arrow.setDirection(newDir);
+            
+            // Rotate sphere
+            sphere.rotation.y += 0.002;
+            wireframe.rotation.y += 0.002;
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
