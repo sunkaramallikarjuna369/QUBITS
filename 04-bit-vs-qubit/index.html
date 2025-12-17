@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit vs Qubit - Qubits</title>
+    <link rel="stylesheet" href="../shared/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #0a0a0a;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚛️ Bit vs Qubit</h1>
+            <p class="subtitle">Understanding the Fundamental Difference</p>
+        </header>
+
+        <section class="section">
+            <h2>Classical Bit vs Quantum Qubit</h2>
+            <p>
+                The fundamental unit of classical information is the bit, which can be either 0 or 1. 
+                The fundamental unit of quantum information is the qubit, which can exist in a 
+                superposition of both 0 and 1 simultaneously. This is the key difference that gives 
+                quantum computers their power.
+            </p>
+            
+            <div id="canvas-container"></div>
+            
+            <div class="key-point">
+                <h3>Key Insight</h3>
+                <p>
+                    While a classical bit is always in a definite state (0 or 1), a qubit can be in 
+                    a superposition of both states until measured. This allows quantum computers to 
+                    process multiple possibilities simultaneously, enabling exponential speedup for 
+                    certain problems.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Classical Bit</h2>
+            <p>
+                A classical bit is the basic unit of information in classical computing:
+            </p>
+            
+            <div class="highlight">
+                <h3>Properties of a Classical Bit</h3>
+                <ul>
+                    <li><strong>Two States:</strong> Can only be 0 or 1 at any given time</li>
+                    <li><strong>Definite State:</strong> Always in a well-defined state</li>
+                    <li><strong>Deterministic:</strong> Reading a bit doesn't change its state</li>
+                    <li><strong>Copyable:</strong> Can be copied perfectly (cloning theorem doesn't apply)</li>
+                    <li><strong>No Interference:</strong> Bits don't interfere with each other</li>
+                </ul>
+            </div>
+            
+            <div class="example">
+                <h3>Classical Bit Representation</h3>
+                <p>
+                    A classical bit can be represented as:
+                </p>
+                <ul>
+                    <li><strong>0:</strong> Off state, false, low voltage</li>
+                    <li><strong>1:</strong> On state, true, high voltage</li>
+                </ul>
+                <p>
+                    In memory, bits are stored as electrical charges, magnetic orientations, 
+                    or optical states.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Quantum Qubit</h2>
+            <p>
+                A qubit is the basic unit of quantum information:
+            </p>
+            
+            <div class="highlight">
+                <h3>Properties of a Qubit</h3>
+                <ul>
+                    <li><strong>Superposition:</strong> Can be in both 0 and 1 states simultaneously</li>
+                    <li><strong>Complex Amplitudes:</strong> State described by complex numbers</li>
+                    <li><strong>Probabilistic:</strong> Measurement collapses to 0 or 1 probabilistically</li>
+                    <li><strong>No-Cloning:</strong> Cannot be copied perfectly (no-cloning theorem)</li>
+                    <li><strong>Interference:</strong> Quantum states can interfere constructively/destructively</li>
+                    <li><strong>Entanglement:</strong> Can be correlated with other qubits in non-classical ways</li>
+                </ul>
+            </div>
+            
+            <div class="example">
+                <h3>Qubit Representation</h3>
+                <p>
+                    A qubit is represented as a quantum state vector:
+                </p>
+                <div class="formula">
+                    |ψ⟩ = α|0⟩ + β|1⟩
+                </div>
+                <p>where:</p>
+                <ul>
+                    <li><strong>α, β:</strong> Complex probability amplitudes</li>
+                    <li><strong>|α|² + |β|² = 1:</strong> Normalization condition</li>
+                    <li><strong>|α|²:</strong> Probability of measuring 0</li>
+                    <li><strong>|β|²:</strong> Probability of measuring 1</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Key Differences</h2>
+            
+            <div class="code-block">
+                <h3>1. State Space</h3>
+                <p><strong>Classical Bit:</strong> Discrete state space {0, 1}</p>
+                <p><strong>Qubit:</strong> Continuous state space (Bloch sphere)</p>
+                <p>
+                    A qubit can be in any superposition of |0⟩ and |1⟩, giving it infinitely 
+                    many possible states before measurement.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>2. Information Content</h3>
+                <p><strong>Classical Bit:</strong> Stores exactly 1 bit of information</p>
+                <p><strong>Qubit:</strong> Can store infinite classical information in superposition</p>
+                <p>
+                    However, measurement extracts only 1 classical bit. The power comes from 
+                    quantum parallelism during computation.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>3. Operations</h3>
+                <p><strong>Classical Bit:</strong> Boolean logic gates (AND, OR, NOT, etc.)</p>
+                <p><strong>Qubit:</strong> Unitary quantum gates (Hadamard, CNOT, Phase, etc.)</p>
+                <p>
+                    Quantum gates are reversible and preserve the norm of the state vector.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>4. Measurement</h3>
+                <p><strong>Classical Bit:</strong> Reading doesn't change the state</p>
+                <p><strong>Qubit:</strong> Measurement collapses superposition to definite state</p>
+                <p>
+                    This is a fundamental difference: quantum measurement is destructive and 
+                    irreversible.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>5. Copying</h3>
+                <p><strong>Classical Bit:</strong> Can be copied perfectly</p>
+                <p><strong>Qubit:</strong> Cannot be cloned (no-cloning theorem)</p>
+                <p>
+                    The no-cloning theorem states that it's impossible to create an identical 
+                    copy of an arbitrary unknown quantum state.
+                </p>
+            </div>
+
+            <div class="code-block">
+                <h3>6. Parallelism</h3>
+                <p><strong>Classical Bit:</strong> Sequential processing</p>
+                <p><strong>Qubit:</strong> Quantum parallelism through superposition</p>
+                <p>
+                    n qubits can represent 2ⁿ states simultaneously, enabling exponential 
+                    parallelism.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Comparison Table</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <thead>
+                    <tr style="background-color: #1a1a2e; color: #64ffda;">
+                        <th style="padding: 15px; border: 1px solid #444;">Property</th>
+                        <th style="padding: 15px; border: 1px solid #444;">Classical Bit</th>
+                        <th style="padding: 15px; border: 1px solid #444;">Quantum Qubit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>States</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">0 or 1</td>
+                        <td style="padding: 12px; border: 1px solid #444;">α|0⟩ + β|1⟩</td>
+                    </tr>
+                    <tr style="background-color: #0f0f1e;">
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Superposition</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">No</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Yes</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Measurement</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">Non-destructive</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Destructive (collapses state)</td>
+                    </tr>
+                    <tr style="background-color: #0f0f1e;">
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Cloning</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">Possible</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Impossible (no-cloning)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Interference</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">No</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Yes (quantum interference)</td>
+                    </tr>
+                    <tr style="background-color: #0f0f1e;">
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Entanglement</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">No</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Yes (quantum correlations)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Parallelism</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">Sequential</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Exponential (2ⁿ states)</td>
+                    </tr>
+                    <tr style="background-color: #0f0f1e;">
+                        <td style="padding: 12px; border: 1px solid #444;"><strong>Gates</strong></td>
+                        <td style="padding: 12px; border: 1px solid #444;">Boolean (AND, OR, NOT)</td>
+                        <td style="padding: 12px; border: 1px solid #444;">Unitary (H, CNOT, Phase)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>Superposition: The Key Difference</h2>
+            <p>
+                The most important difference between bits and qubits is superposition:
+            </p>
+            
+            <div class="highlight">
+                <h3>Classical Bit</h3>
+                <p>
+                    A classical bit is always in a definite state:
+                </p>
+                <ul>
+                    <li>State 0: Bit is definitely 0</li>
+                    <li>State 1: Bit is definitely 1</li>
+                </ul>
+                <p>
+                    There is no "in-between" state. The bit is always either 0 or 1.
+                </p>
+            </div>
+
+            <div class="highlight">
+                <h3>Quantum Qubit</h3>
+                <p>
+                    A qubit can be in a superposition of both states:
+                </p>
+                <div class="formula">
+                    |ψ⟩ = α|0⟩ + β|1⟩
+                </div>
+                <p>
+                    The qubit is simultaneously in both |0⟩ and |1⟩ states until measured. 
+                    This is not a lack of knowledge - it's a fundamental property of quantum mechanics.
+                </p>
+            </div>
+            
+            <div class="key-point">
+                <h3>Quantum Advantage</h3>
+                <p>
+                    Superposition allows quantum computers to explore multiple solution paths 
+                    simultaneously. For n qubits, a quantum computer can process 2ⁿ states in 
+                    parallel, while a classical computer must process them sequentially.
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Physical Implementations</h2>
+            
+            <div class="code-block">
+                <h3>Classical Bits</h3>
+                <p>Physical implementations of classical bits:</p>
+                <ul>
+                    <li><strong>Transistors:</strong> High/low voltage states</li>
+                    <li><strong>Magnetic storage:</strong> North/south magnetization</li>
+                    <li><strong>Optical storage:</strong> Reflective/non-reflective pits</li>
+                    <li><strong>Electrical charges:</strong> Charged/uncharged capacitors</li>
+                </ul>
+            </div>
+
+            <div class="code-block">
+                <h3>Qubits</h3>
+                <p>Physical implementations of qubits:</p>
+                <ul>
+                    <li><strong>Superconducting circuits:</strong> Current flow directions</li>
+                    <li><strong>Trapped ions:</strong> Electronic energy levels</li>
+                    <li><strong>Photons:</strong> Polarization states</li>
+                    <li><strong>Quantum dots:</strong> Electron spin states</li>
+                    <li><strong>NV centers:</strong> Nitrogen-vacancy defects in diamond</li>
+                    <li><strong>Topological qubits:</strong> Anyonic braiding</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Why Qubits Matter</h2>
+            <div class="key-point">
+                <h3>Quantum Computational Advantage</h3>
+                <ul>
+                    <li><strong>Exponential State Space:</strong> n qubits represent 2ⁿ states</li>
+                    <li><strong>Quantum Parallelism:</strong> Process all states simultaneously</li>
+                    <li><strong>Interference:</strong> Amplify correct answers, cancel wrong ones</li>
+                    <li><strong>Entanglement:</strong> Create correlations impossible classically</li>
+                    <li><strong>Speedup:</strong> Exponential advantage for certain problems</li>
+                </ul>
+                
+                <p style="margin-top: 20px;">
+                    <strong>Examples of quantum advantage:</strong>
+                </p>
+                <ul>
+                    <li>Shor's algorithm: Factor large numbers exponentially faster</li>
+                    <li>Grover's algorithm: Search unsorted databases quadratically faster</li>
+                    <li>Quantum simulation: Simulate quantum systems efficiently</li>
+                    <li>Quantum machine learning: Potential speedups for certain ML tasks</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="../03-vectors/index.html" class="btn">← Previous: Vectors</a>
+            <a href="../index.html" class="btn">Home</a>
+            <a href="../05-qubit-from-bit/index.html" class="btn btn-primary">Next: Qubit from Bit →</a>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+        
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 0, 8);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+        
+        // Classical Bit (left side)
+        const bitGroup = new THREE.Group();
+        bitGroup.position.x = -4;
+        
+        // Create two states for classical bit
+        const bit0Geometry = new THREE.SphereGeometry(0.8, 32, 32);
+        const bit0Material = new THREE.MeshPhongMaterial({ color: 0xff6b6b });
+        const bit0 = new THREE.Mesh(bit0Geometry, bit0Material);
+        bit0.position.y = 1.5;
+        bitGroup.add(bit0);
+        
+        const bit1Geometry = new THREE.SphereGeometry(0.8, 32, 32);
+        const bit1Material = new THREE.MeshPhongMaterial({ color: 0x4ecdc4 });
+        const bit1 = new THREE.Mesh(bit1Geometry, bit1Material);
+        bit1.position.y = -1.5;
+        bitGroup.add(bit1);
+        
+        // Add line between states
+        const bitLineGeometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 1.5, 0),
+            new THREE.Vector3(0, -1.5, 0)
+        ]);
+        const bitLine = new THREE.Line(bitLineGeometry, 
+            new THREE.LineBasicMaterial({ color: 0x888888, linewidth: 2 }));
+        bitGroup.add(bitLine);
+        
+        scene.add(bitGroup);
+        
+        // Quantum Qubit (right side) - Bloch sphere
+        const qubitGroup = new THREE.Group();
+        qubitGroup.position.x = 4;
+        
+        // Create Bloch sphere wireframe
+        const sphereGeometry = new THREE.SphereGeometry(2, 32, 32);
+        const sphereEdges = new THREE.EdgesGeometry(sphereGeometry);
+        const sphereLines = new THREE.LineSegments(sphereEdges, 
+            new THREE.LineBasicMaterial({ color: 0x64ffda, transparent: true, opacity: 0.3 }));
+        qubitGroup.add(sphereLines);
+        
+        // Add axes
+        const axisLength = 2.5;
+        const xAxis = new THREE.ArrowHelper(
+            new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 0, 0), 
+            axisLength, 0xff0000, 0.3, 0.2);
+        const yAxis = new THREE.ArrowHelper(
+            new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 0), 
+            axisLength, 0x00ff00, 0.3, 0.2);
+        const zAxis = new THREE.ArrowHelper(
+            new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 
+            axisLength, 0x0000ff, 0.3, 0.2);
+        qubitGroup.add(xAxis);
+        qubitGroup.add(yAxis);
+        qubitGroup.add(zAxis);
+        
+        // Add |0⟩ and |1⟩ markers
+        const marker0Geometry = new THREE.SphereGeometry(0.15, 16, 16);
+        const marker0Material = new THREE.MeshPhongMaterial({ color: 0xff6b6b });
+        const marker0 = new THREE.Mesh(marker0Geometry, marker0Material);
+        marker0.position.set(0, 2, 0);
+        qubitGroup.add(marker0);
+        
+        const marker1Geometry = new THREE.SphereGeometry(0.15, 16, 16);
+        const marker1Material = new THREE.MeshPhongMaterial({ color: 0x4ecdc4 });
+        const marker1 = new THREE.Mesh(marker1Geometry, marker1Material);
+        marker1.position.set(0, -2, 0);
+        qubitGroup.add(marker1);
+        
+        // Add rotating state vector
+        const stateDir = new THREE.Vector3(1, 1, 0).normalize();
+        const stateArrow = new THREE.ArrowHelper(stateDir, new THREE.Vector3(0, 0, 0), 
+            2, 0xffd93d, 0.4, 0.3);
+        qubitGroup.add(stateArrow);
+        
+        scene.add(qubitGroup);
+        
+        // Animation
+        let time = 0;
+        let bitState = 0;
+        let lastBitChange = 0;
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Animate classical bit (discrete switching)
+            if (time - lastBitChange > 2) {
+                bitState = 1 - bitState;
+                lastBitChange = time;
+            }
+            
+            // Pulse the active bit state
+            const activeBit = bitState === 0 ? bit0 : bit1;
+            const inactiveBit = bitState === 0 ? bit1 : bit0;
+            
+            const pulse = 1 + 0.2 * Math.sin(time * 3);
+            activeBit.scale.set(pulse, pulse, pulse);
+            inactiveBit.scale.set(0.7, 0.7, 0.7);
+            
+            // Rotate qubit state vector (continuous superposition)
+            const theta = time * 0.5;
+            const phi = time * 0.3;
+            const x = Math.sin(theta) * Math.cos(phi);
+            const y = Math.cos(theta);
+            const z = Math.sin(theta) * Math.sin(phi);
+            
+            const newDir = new THREE.Vector3(x, y, z).normalize();
+            stateArrow.setDirection(newDir);
+            
+            // Rotate Bloch sphere slightly
+            qubitGroup.rotation.y = time * 0.1;
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
