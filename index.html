@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qubits - Fundamental Unit of Quantum Information</title>
+    <link rel="stylesheet" href="shared/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #0a0a0a;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚛️ Qubits</h1>
+            <p class="subtitle">Fundamental Unit of Quantum Information</p>
+            <p style="margin-top: 15px; font-size: 1.1em;">Interactive 3D Visualizations and Comprehensive Guide</p>
+        </header>
+
+        <section class="section">
+            <h2>Welcome to Qubits Visualization</h2>
+            <p>
+                This comprehensive guide provides interactive 3D visualizations and detailed explanations 
+                of qubits - the fundamental building blocks of quantum computing. Explore each concept 
+                through immersive visualizations and mathematical foundations.
+            </p>
+            
+            <div id="canvas-container"></div>
+            
+            <div class="key-point">
+                <h3>What You'll Learn</h3>
+                <ul>
+                    <li>Understanding the difference between classical bits and quantum qubits</li>
+                    <li>Mathematical, physical, and computational views of qubits</li>
+                    <li>Single qubit operations and multi-qubit systems</li>
+                    <li>Quantum entanglement and its applications</li>
+                    <li>Bloch sphere representation of qubit states</li>
+                    <li>Practical implementations and quantum computing fundamentals</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📚 All Concepts</h2>
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <h3>1. Introduction</h3>
+                    <p>Getting started with qubits and quantum information</p>
+                    <a href="01-introduction/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>2. Complex Numbers</h3>
+                    <p>Mathematical foundation: complex numbers in quantum mechanics</p>
+                    <a href="02-complex-numbers/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>3. Vectors</h3>
+                    <p>Vector spaces and quantum state representation</p>
+                    <a href="03-vectors/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>4. Bit vs Qubit</h3>
+                    <p>Classical bits compared to quantum qubits</p>
+                    <a href="04-bit-vs-qubit/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>5. Qubit from Bit</h3>
+                    <p>Transitioning from classical to quantum information</p>
+                    <a href="05-qubit-from-bit/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>6. Mathematical View</h3>
+                    <p>Formal mathematical description of qubits</p>
+                    <a href="06-mathematical-view/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>7. Physical View</h3>
+                    <p>Physical implementations and quantum systems</p>
+                    <a href="07-physical-view/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>8. Computational View</h3>
+                    <p>Qubits in quantum computation and algorithms</p>
+                    <a href="08-computational-view/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>9. Single Qubit</h3>
+                    <p>Operations and transformations on single qubits</p>
+                    <a href="09-single-qubit/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>10. Multi-Qubits</h3>
+                    <p>Multiple qubit systems and tensor products</p>
+                    <a href="10-multi-qubits/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>11. Entangled Qubits</h3>
+                    <p>Quantum entanglement and Bell states</p>
+                    <a href="11-entangled-qubits/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>12. Bloch Sphere</h3>
+                    <p>Geometric representation of qubit states</p>
+                    <a href="12-bloch-sphere/index.html">Explore →</a>
+                </div>
+                
+                <div class="concept-card">
+                    <h3>13. Summary</h3>
+                    <p>Complete reference guide and key takeaways</p>
+                    <a href="13-summary/index.html">Explore →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Learning Path</h2>
+            <div class="highlight">
+                <h3>Recommended Study Order</h3>
+                <ol>
+                    <li><strong>Foundations (1-3):</strong> Introduction, complex numbers, and vectors</li>
+                    <li><strong>Core Concepts (4-6):</strong> Bit vs qubit, qubit from bit, mathematical view</li>
+                    <li><strong>Perspectives (7-8):</strong> Physical and computational views</li>
+                    <li><strong>Advanced Topics (9-12):</strong> Single qubits, multi-qubits, entanglement, Bloch sphere</li>
+                    <li><strong>Review (13):</strong> Summary and comprehensive reference</li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🚀 Getting Started</h2>
+            <p>
+                Each concept includes:
+            </p>
+            <ul>
+                <li>Interactive 3D visualizations with Three.js</li>
+                <li>Comprehensive mathematical explanations</li>
+                <li>Python scripts with matplotlib visualizations</li>
+                <li>Practical examples and applications</li>
+                <li>Navigation between related concepts</li>
+            </ul>
+            
+            <div class="nav-buttons" style="margin-top: 30px;">
+                <a href="01-introduction/index.html" class="btn btn-primary">Start Learning →</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Three.js Scene Setup
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0a0a0a);
+        
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(3, 3, 3);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const pointLight = new THREE.PointLight(0xffffff, 0.8);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+        
+        // Create Bloch sphere
+        const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const sphereMaterial = new THREE.MeshPhongMaterial({
+            color: 0x64ffda,
+            transparent: true,
+            opacity: 0.2,
+            wireframe: false
+        });
+        const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphere);
+        
+        // Add wireframe
+        const wireframeGeometry = new THREE.SphereGeometry(1, 16, 16);
+        const wireframeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x64ffda,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const wireframe = new THREE.Mesh(wireframeGeometry, wireframeMaterial);
+        scene.add(wireframe);
+        
+        // Add axes
+        const axesHelper = new THREE.AxesHelper(1.5);
+        scene.add(axesHelper);
+        
+        // Create rotating qubit state vector
+        const arrowDir = new THREE.Vector3(0, 0, 1).normalize();
+        const arrowOrigin = new THREE.Vector3(0, 0, 0);
+        const arrowLength = 1;
+        const arrowColor = 0xff6b6b;
+        const arrow = new THREE.ArrowHelper(arrowDir, arrowOrigin, arrowLength, arrowColor, 0.2, 0.15);
+        scene.add(arrow);
+        
+        // Animation
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            time += 0.01;
+            
+            // Rotate the state vector
+            const theta = Math.PI / 3;
+            const phi = time;
+            const x = Math.sin(theta) * Math.cos(phi);
+            const y = Math.sin(theta) * Math.sin(phi);
+            const z = Math.cos(theta);
+            
+            const newDir = new THREE.Vector3(x, y, z).normalize();
+            arrow.setDirection(newDir);
+            
+            // Rotate sphere slowly
+            sphere.rotation.y += 0.002;
+            wireframe.rotation.y += 0.002;
+            
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
